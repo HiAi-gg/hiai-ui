@@ -4,8 +4,7 @@ The canonical UI package for the HiAi ecosystem. Design reference — **hiai-doc
 (oklch, shadcn-svelte new-york / slate). Source-only (no compilation): consumers
 import the source, which their Vite + Tailwind v4 builds.
 
-> Plan and status: [`HIAI_UI_PACKAGE_PLAN.md`](../../projects/HIAI_UI_PACKAGE_PLAN.md) ·
-> rules: [`HIAI_CONVENTIONS.md`](../../projects/HIAI_CONVENTIONS.md).
+> See the project documentation for more details.
 
 ## Layers
 

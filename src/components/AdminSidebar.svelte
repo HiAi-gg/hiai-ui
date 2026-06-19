@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import pkg from '../../package.json';
 
   export interface NavItem {
     label: string;
@@ -105,7 +106,7 @@
 
   <div class="border-t border-border p-3">
     {#if !collapsed}
-      <p class="text-[10px] text-muted-foreground text-center">v0.1.0</p>
+      <p class="text-[10px] text-muted-foreground text-center">v{pkg.version}</p>
     {/if}
   </div>
 </aside>
