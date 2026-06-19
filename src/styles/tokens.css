@@ -14,6 +14,8 @@
  * See HIAI_UI_PACKAGE_PLAN.md (UI-1).
  */
 
+@source "../**/*.svelte";
+
 /* ============================================
    1. Canon — light (mirror of hiai-docs app.css)
    ============================================ */
