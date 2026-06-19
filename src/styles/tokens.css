@@ -1,0 +1,325 @@
+/* @hiai/ui — Canonical design tokens (oklch, shadcn-svelte new-york / slate)
+ *
+ * SOURCE OF TRUTH: hiai-docs/frontend/src/app.css. When the design changes,
+ * edit it there first, then sync here. All hiai-* projects import this file:
+ *   @import "tailwindcss";
+ *   @import "@hiai/ui/styles/tokens.css";
+ *
+ * Layers below:
+ *   1. :root / .dark  — faithful canon from hiai-docs (do not diverge)
+ *   2. semantic add-on — success/warning/info/violet/primary-hover (additive)
+ *   3. .theme-observe  — dark-first variant for hiai-observe
+ *   4. @theme          — Tailwind v4 token mapping
+ *   5. base            — document + TipTap/ProseMirror base (editor needs it)
+ * See HIAI_UI_PACKAGE_PLAN.md (UI-1).
+ */
+
+/* ============================================
+   1. Canon — light (mirror of hiai-docs app.css)
+   ============================================ */
+:root {
+	color-scheme: light;
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0.013 285.82);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0.013 285.82);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0.013 285.82);
+	/* Brand accent (light): selections, focus rings, primary buttons,
+	   native form accents (calendar/date selected day via accent-color). */
+	--primary: #20b2aa;
+	--primary-foreground: oklch(0.985 0.002 247.86);
+	--secondary: oklch(0.97 0.004 264.54);
+	--secondary-foreground: oklch(0.205 0.042 265.76);
+	--muted: oklch(0.97 0.004 264.54);
+	--muted-foreground: oklch(0.556 0.019 270.87);
+	--accent: oklch(0.97 0.004 264.54);
+	--accent-foreground: oklch(0.205 0.042 265.76);
+	--destructive: oklch(0.577 0.245 27.33);
+	--destructive-foreground: oklch(0.985 0.002 247.86);
+	--border: oklch(0.922 0.007 264.54);
+	--input: oklch(0.922 0.007 264.54);
+	--ring: #20b2aa;
+	--radius: 0.625rem;
+
+	/* App-level tokens */
+	--color-primary: #20b2aa;
+	--color-secondary: oklch(0.97 0.004 264.54);
+	--color-bg: oklch(1 0 0);
+	--color-surface: oklch(0.985 0.002 247.86);
+
+	/* Editor highlight fallback (TipTap sets inline background-color when a
+	   color is selected; this is the default when none is set). */
+	--highlight-default: #fde68a;
+
+	/* Syntax highlighting — light (GitHub-inspired) */
+	--hljs-keyword: #cf222e;
+	--hljs-string: #0a3069;
+	--hljs-number: #0550ae;
+	--hljs-function: #8250df;
+	--hljs-title: #8250df;
+	--hljs-comment: #6e7781;
+	--hljs-built_in: #953800;
+	--hljs-type: #0550ae;
+	--hljs-attr: #953800;
+	--hljs-variable: #953800;
+	--hljs-literal: #cf222e;
+
+	/* 2. Semantic add-on (additive — not in hiai-docs canon) */
+	--primary-hover: #1c9c95;
+	--success: oklch(0.55 0.18 145);
+	--success-foreground: oklch(0.985 0.002 247.86);
+	--warning: oklch(0.7 0.18 75);
+	--warning-foreground: oklch(0.145 0.013 285.82);
+	--info: oklch(0.6 0.18 240);
+	--info-foreground: oklch(0.985 0.002 247.86);
+	--violet: oklch(0.5 0.22 290);
+}
+
+/* ============================================
+   1. Canon — dark (mirror of hiai-docs app.css)
+   ============================================ */
+.dark {
+	color-scheme: dark;
+	--background: oklch(0.16 0 0);
+	--foreground: oklch(0.96 0 0);
+	--card: oklch(0.20 0 0);
+	--card-foreground: oklch(0.96 0 0);
+	--popover: oklch(0.24 0 0);
+	--popover-foreground: oklch(0.96 0 0);
+	--primary: #9932cc;
+	--primary-foreground: oklch(0.98 0 0);
+	--secondary: oklch(0.24 0 0);
+	--secondary-foreground: oklch(0.96 0 0);
+	--muted: oklch(0.26 0 0);
+	--muted-foreground: oklch(0.74 0 0);
+	--accent: oklch(0.28 0 0);
+	--accent-foreground: oklch(0.96 0 0);
+	--destructive: oklch(0.58 0.18 25);
+	--destructive-foreground: oklch(0.98 0.01 25);
+	--border: oklch(0.32 0 0);
+	--input: oklch(0.34 0 0);
+	--ring: #9932cc;
+
+	--color-primary: #9932cc;
+	--color-secondary: oklch(0.24 0 0);
+	--color-bg: oklch(0.16 0 0);
+	--color-surface: oklch(0.20 0 0);
+
+	--highlight-default: #78350f;
+
+	/* Syntax highlighting — dark (Material Palenight) */
+	--hljs-keyword: #c792ea;
+	--hljs-string: #c3e88d;
+	--hljs-number: #f78c6c;
+	--hljs-function: #82aaff;
+	--hljs-title: #82aaff;
+	--hljs-comment: #676e95;
+	--hljs-built_in: #ffcb6b;
+	--hljs-type: #ffcb6b;
+	--hljs-attr: #ffcb6b;
+	--hljs-variable: #f07178;
+	--hljs-literal: #ff5370;
+
+	/* 2. Semantic add-on (dark) */
+	--primary-hover: #a94ed6;
+	--success: oklch(0.55 0.18 145);
+	--success-foreground: oklch(0.985 0.002 247.86);
+	--warning: oklch(0.7 0.18 75);
+	--warning-foreground: oklch(0.145 0.013 285.82);
+	--info: oklch(0.6 0.18 240);
+	--info-foreground: oklch(0.985 0.002 247.86);
+	--violet: oklch(0.6 0.22 290);
+}
+
+/* ============================================
+   3. observe variant — dark-first slate (opt-in via .theme-observe)
+   Aligns hiai-observe with the canon dark palette so it reads as one product.
+   ============================================ */
+.theme-observe {
+	color-scheme: dark;
+	--background: oklch(0.16 0 0);
+	--foreground: oklch(0.96 0 0);
+	--card: oklch(0.20 0 0);
+	--card-foreground: oklch(0.96 0 0);
+	--popover: oklch(0.24 0 0);
+	--popover-foreground: oklch(0.96 0 0);
+	--primary: #20b2aa;
+	--primary-foreground: oklch(0.98 0 0);
+	--primary-hover: #1c9c95;
+	--secondary: oklch(0.24 0 0);
+	--secondary-foreground: oklch(0.96 0 0);
+	--muted: oklch(0.26 0 0);
+	--muted-foreground: oklch(0.74 0 0);
+	--accent: oklch(0.28 0 0);
+	--accent-foreground: oklch(0.96 0 0);
+	--destructive: oklch(0.58 0.18 25);
+	--destructive-foreground: oklch(0.98 0.01 25);
+	--border: oklch(0.32 0 0);
+	--input: oklch(0.34 0 0);
+	--ring: #20b2aa;
+	--color-primary: #20b2aa;
+	--color-bg: oklch(0.16 0 0);
+	--color-surface: oklch(0.20 0 0);
+}
+
+/* ============================================
+   4. Tailwind v4 token mapping
+   ============================================ */
+@theme {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary-hover: var(--primary-hover);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+	--color-info: var(--info);
+	--color-info-foreground: var(--info-foreground);
+	--color-violet: var(--violet);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--radius: var(--radius);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ============================================
+   5. Base — document (mirror of hiai-docs app.css)
+   ============================================ */
+html,
+body {
+	background-color: var(--background);
+	color: var(--foreground);
+	accent-color: var(--primary);
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+input,
+select,
+textarea {
+	accent-color: var(--primary);
+}
+
+::selection {
+	background-color: var(--primary);
+	color: var(--primary-foreground);
+}
+
+.skip-link {
+	position: absolute;
+	top: -100%;
+	left: 0;
+	z-index: 9999;
+	padding: 8px 16px;
+	background: var(--primary);
+	color: var(--primary-foreground);
+	text-decoration: none;
+	border-radius: 0 0 4px 0;
+}
+.skip-link:focus {
+	top: 0;
+}
+
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="month"],
+input[type="week"] {
+	accent-color: var(--primary);
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+}
+
+/* Metric card helpers (used by StatsCard composite) */
+.metric-card {
+	background-color: var(--card);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	padding: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	transition: border-color 0.15s ease;
+}
+.metric-card:hover {
+	border-color: var(--ring);
+}
+.metric-label {
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--muted-foreground);
+}
+.metric-value {
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--foreground);
+	line-height: 1.2;
+}
+
+/* ============================================
+   5. Base — TipTap / ProseMirror (TipexEditor composite needs it)
+   ============================================ */
+.ProseMirror,
+.tiptap {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.ProseMirror p,
+.tiptap p {
+	min-height: 1.5em;
+}
+
+.ProseMirror .doc-image,
+.tiptap .doc-image {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin: 0.5rem 0;
+	border-radius: 6px;
+}
+
+.tiptap ul,
+.shared-doc-body ul {
+	list-style: disc outside;
+	padding-left: 1.5rem;
+}
+.tiptap ol,
+.shared-doc-body ol {
+	list-style: decimal outside;
+	padding-left: 1.5rem;
+}
+.tiptap li,
+.shared-doc-body li {
+	display: list-item;
+}
+
+.tiptap ul[data-type="taskList"],
+.shared-doc-body ul[data-type="taskList"] {
+	list-style: none;
+	padding-left: 0.25rem;
+}
+.tiptap ul[data-type="taskList"] li,
+.shared-doc-body ul[data-type="taskList"] li {
+	display: flex;
+}
