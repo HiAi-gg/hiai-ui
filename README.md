@@ -13,11 +13,10 @@ import the source, which their Vite + Tailwind v4 builds.
 | **Tokens** | `src/styles/tokens.css` | `@import "@hiai-gg/hiai-ui/styles/tokens.css";` |
 | **Primitives** (shadcn) | `src/components/ui/*` | `import { Button } from "@hiai-gg/hiai-ui/components/ui/button";` |
 | **Composites** | `src/components/*` | `import { AdminSidebar, StatsCard } from "@hiai-gg/hiai-ui";` |
-| **Editor** | `src/components/editor/*` | `import TipexEditor from "@hiai-gg/hiai-ui/components/editor/TipexEditor.svelte";` |
 | **Stores / lib** | `src/stores`, `src/lib` | `import { authStore, cn } from "@hiai-gg/hiai-ui";` |
 
-Primitives and editor are deep-path only (not in main barrel) to avoid pulling
-`bits-ui`/`lucide`/`tiptap` on SSR when unnecessary.
+Primitives are deep-path only (not in main barrel) to avoid pulling
+`bits-ui`/`lucide` on SSR when unnecessary.
 
 ## How to connect (contract — enforced by every hiai project)
 
@@ -51,7 +50,7 @@ edit there first, then sync here.** Layers within the file:
 | semantic add-on | `--primary-hover`, `--success`, `--warning`, `--info`, `--violet` (+`-foreground`) — additive, not instead of docs |
 | `.theme-observe` | dark-first slate variant for hiai-observe |
 | `@theme` | mapping tokens to Tailwind v4 (`bg-primary`, `text-muted-foreground`, `rounded-lg`…) + scale `--radius-{sm,md,lg,xl}` |
-| base | document (`html/body`, `::selection`, `.skip-link`, date-inputs), `.metric-*` (StatsCard), TipTap/ProseMirror base (required by editor) |
+| base | document (`html/body`, `::selection`, `.skip-link`, date-inputs), `.metric-*` (StatsCard) |
 
 Brand accent: light `#20b2aa`, dark `#9932cc`.
 

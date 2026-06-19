@@ -33,18 +33,9 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@tiptap/core": "^3.23.5",
-    "@tiptap/starter-kit": "^3.23.5",
-    "@tiptap/pm": "^3.23.5",
-    "@tiptap/markdown": "^3.18.0",
-    "@tiptap/extension-link": "^3.18.0",
-    "@tiptap/extension-highlight": "^3.18.0",
-    "@tiptap/extension-code-block-lowlight": "^3.18.0",
-    "svelte-tiptap": "^3.0.1",
     "bits-ui": "^2.18.1",
     "lucide-svelte": "^0.577.0",
     "shadcn-svelte": "^1.2.7",
-    "lowlight": "^3.3.0",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0",
     "tailwind-variants": "^3.2.2"

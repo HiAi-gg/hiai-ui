@@ -5,7 +5,6 @@
 //   - primitives: '@hiai-gg/hiai-ui/components/ui/<button|card|input|badge|dialog|
 //                  dropdown-menu|label|switch|tabs|textarea>' (deep-path, shadcn)
 //   - composites: this barrel (Admin*, StatsCard, DataTable, PageHeader, …)
-//   - editor:     '@hiai-gg/hiai-ui/components/editor/TipexEditor.svelte' (deep-path)
 // See HIAI_UI_PACKAGE_PLAN.md.
 
 // Types
@@ -31,6 +30,3 @@ export { default as DataTable } from './components/DataTable.svelte';
 export { default as PageHeader } from './components/PageHeader.svelte';
 export { default as EmptyState } from './components/EmptyState.svelte';
 export { default as SettingsForm } from './components/SettingsForm.svelte';
-// Editor components are not re-exported here to avoid pulling in
-// lucide-svelte + svelte-tiptap at SSR time. Import them directly via
-// '@hiai-gg/hiai-ui/components/editor/TipexEditor.svelte' when needed.

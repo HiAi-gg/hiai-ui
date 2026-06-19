@@ -10,7 +10,7 @@
  *   2. semantic add-on — success/warning/info/violet/primary-hover (additive)
  *   3. .theme-observe  — dark-first variant for hiai-observe
  *   4. @theme          — Tailwind v4 token mapping
- *   5. base            — document + TipTap/ProseMirror base (editor needs it)
+ *   5. base            — document + .metric-* (StatsCard)
  * See HIAI_UI_PACKAGE_PLAN.md (UI-1).
  */
 
@@ -279,49 +279,6 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 /* ============================================
-   5. Base — TipTap / ProseMirror (TipexEditor composite needs it)
+   5. Base — document (html/body, ::selection, .skip-link, date-inputs),
+      .metric-* (StatsCard)
    ============================================ */
-.ProseMirror,
-.tiptap {
-	white-space: pre-wrap;
-	word-break: break-word;
-}
-
-.ProseMirror p,
-.tiptap p {
-	min-height: 1.5em;
-}
-
-.ProseMirror .doc-image,
-.tiptap .doc-image {
-	display: block;
-	max-width: 100%;
-	height: auto;
-	margin: 0.5rem 0;
-	border-radius: 6px;
-}
-
-.tiptap ul,
-.shared-doc-body ul {
-	list-style: disc outside;
-	padding-left: 1.5rem;
-}
-.tiptap ol,
-.shared-doc-body ol {
-	list-style: decimal outside;
-	padding-left: 1.5rem;
-}
-.tiptap li,
-.shared-doc-body li {
-	display: list-item;
-}
-
-.tiptap ul[data-type="taskList"],
-.shared-doc-body ul[data-type="taskList"] {
-	list-style: none;
-	padding-left: 0.25rem;
-}
-.tiptap ul[data-type="taskList"] li,
-.shared-doc-body ul[data-type="taskList"] li {
-	display: flex;
-}
