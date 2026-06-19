@@ -1,9 +1,9 @@
-/* @hiai/ui — Canonical design tokens (oklch, shadcn-svelte new-york / slate)
+/* @hiai-gg/hiai-ui — Canonical design tokens (oklch, shadcn-svelte new-york / slate)
  *
  * SOURCE OF TRUTH: hiai-docs/frontend/src/app.css. When the design changes,
  * edit it there first, then sync here. All hiai-* projects import this file:
  *   @import "tailwindcss";
- *   @import "@hiai/ui/styles/tokens.css";
+ *   @import "@hiai-gg/hiai-ui/styles/tokens.css";
  *
  * Layers below:
  *   1. :root / .dark  — faithful canon from hiai-docs (do not diverge)

@@ -1,4 +1,4 @@
-# @hiai/ui
+# @hiai-gg/hiai-ui
 
 The canonical UI package for the HiAi ecosystem. Design reference — **hiai-docs**
 (oklch, shadcn-svelte new-york / slate). Source-only (no compilation): consumers
@@ -11,11 +11,11 @@ import the source, which their Vite + Tailwind v4 builds.
 
 | Layer | Location | Import |
 |---|---|---|
-| **Tokens** | `src/styles/tokens.css` | `@import "@hiai/ui/styles/tokens.css";` |
-| **Primitives** (shadcn) | `src/components/ui/*` | `import { Button } from "@hiai/ui/components/ui/button";` |
-| **Composites** | `src/components/*` | `import { AdminSidebar, StatsCard } from "@hiai/ui";` |
-| **Editor** | `src/components/editor/*` | `import TipexEditor from "@hiai/ui/components/editor/TipexEditor.svelte";` |
-| **Stores / lib** | `src/stores`, `src/lib` | `import { authStore, cn } from "@hiai/ui";` |
+| **Tokens** | `src/styles/tokens.css` | `@import "@hiai-gg/hiai-ui/styles/tokens.css";` |
+| **Primitives** (shadcn) | `src/components/ui/*` | `import { Button } from "@hiai-gg/hiai-ui/components/ui/button";` |
+| **Composites** | `src/components/*` | `import { AdminSidebar, StatsCard } from "@hiai-gg/hiai-ui";` |
+| **Editor** | `src/components/editor/*` | `import TipexEditor from "@hiai-gg/hiai-ui/components/editor/TipexEditor.svelte";` |
+| **Stores / lib** | `src/stores`, `src/lib` | `import { authStore, cn } from "@hiai-gg/hiai-ui";` |
 
 Primitives and editor are deep-path only (not in main barrel) to avoid pulling
 `bits-ui`/`lucide`/`tiptap` on SSR when unnecessary.
@@ -25,19 +25,19 @@ Primitives and editor are deep-path only (not in main barrel) to avoid pulling
 1. Add dependency:
    ```jsonc
    // package.json
-   "dependencies": { "@hiai/ui": "workspace:*" }
+   "dependencies": { "@hiai-gg/hiai-ui": "workspace:*" }
    ```
 2. Import tokens in root `app.css` (after Tailwind):
    ```css
    @import "tailwindcss";
-   @import "@hiai/ui/styles/tokens.css";
+   @import "@hiai-gg/hiai-ui/styles/tokens.css";
    ```
 3. Let Tailwind v4 scan the package classes — in `app.css`:
    ```css
    @source "../../../packages/hiai-ui/src";
    ```
    (path — relative to the file; adjust for project depth).
-4. Use components from `@hiai/ui` / `@hiai/ui/components/ui/*`.
+4. Use components from `@hiai-gg/hiai-ui` / `@hiai-gg/hiai-ui/components/ui/*`.
 5. **Remove local duplicates** of components and tokens.
 6. Theme: `.dark` class on `<html>` (toggle via `ThemeToggle`); for observe — `.theme-observe`.
 

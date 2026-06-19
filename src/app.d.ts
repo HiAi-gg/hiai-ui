@@ -3,7 +3,7 @@
 // SvelteKit app at runtime; here we only need the types so `svelte-check`
 // resolves them when the package is checked in isolation.
 declare module "$app/state" {
-	/** Reactive page state. Only the fields used by @hiai/ui components are typed. */
+	/** Reactive page state. Only the fields used by @hiai-gg/hiai-ui components are typed. */
 	export const page: {
 		url: URL;
 		params: Record<string, string>;

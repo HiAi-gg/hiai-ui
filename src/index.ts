@@ -1,11 +1,11 @@
-// @hiai/ui — Shared components, stores, and utilities for the HiAi ecosystem
+// @hiai-gg/hiai-ui — Shared components, stores, and utilities for the HiAi ecosystem
 //
 // Layers:
-//   - tokens:     @import "@hiai/ui/styles/tokens.css"  (canon from hiai-docs)
-//   - primitives: '@hiai/ui/components/ui/<button|card|input|badge|dialog|
+//   - tokens:     @import "@hiai-gg/hiai-ui/styles/tokens.css"  (canon from hiai-docs)
+//   - primitives: '@hiai-gg/hiai-ui/components/ui/<button|card|input|badge|dialog|
 //                  dropdown-menu|label|switch|tabs|textarea>' (deep-path, shadcn)
 //   - composites: this barrel (Admin*, StatsCard, DataTable, PageHeader, …)
-//   - editor:     '@hiai/ui/components/editor/TipexEditor.svelte' (deep-path)
+//   - editor:     '@hiai-gg/hiai-ui/components/editor/TipexEditor.svelte' (deep-path)
 // See HIAI_UI_PACKAGE_PLAN.md.
 
 // Types
@@ -33,4 +33,4 @@ export { default as EmptyState } from './components/EmptyState.svelte';
 export { default as SettingsForm } from './components/SettingsForm.svelte';
 // Editor components are not re-exported here to avoid pulling in
 // lucide-svelte + svelte-tiptap at SSR time. Import them directly via
-// '@hiai/ui/components/editor/TipexEditor.svelte' when needed.
+// '@hiai-gg/hiai-ui/components/editor/TipexEditor.svelte' when needed.
