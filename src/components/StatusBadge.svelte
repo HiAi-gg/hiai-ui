@@ -26,6 +26,9 @@
     draft: 'bg-muted text-muted-foreground border-border',
     failed: 'bg-destructive/10 text-destructive border-destructive/20',
     processing: 'bg-warning/10 text-warning border-warning/20',
+    provisioning: 'bg-warning/10 text-warning border-warning/20',
+    ready: 'bg-success/10 text-success border-success/20',
+    running: 'bg-info/10 text-info border-info/20',
     completed: 'bg-success/10 text-success border-success/20',
     cancelled: 'bg-muted text-muted-foreground border-border',
   };
