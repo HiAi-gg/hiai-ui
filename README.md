@@ -1,6 +1,19 @@
 # @hiai-gg/hiai-ui
 
-The canonical UI package for the HiAi ecosystem. Design reference — **hiai-docs**
+![npm version](https://img.shields.io/npm/v/@hiai-gg/hiai-ui?logo=npm)
+![npm downloads](https://img.shields.io/npm/dw/@hiai-gg/hiai-ui?logo=npm)
+![license](https://img.shields.io/github/license/HiAi-gg/hiai-ui)
+![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
+
+## Why @hiai-gg/hiai-ui
+
+- One source of truth for design tokens across the HiAi ecosystem
+- 10 opinionated composites (AdminSidebar, DataTable, StatsCard, ConfirmModal, SettingsForm…)
+- 10 shadcn-svelte primitives with deep-path imports for tree-shaking
+- Dark mode built-in via `.dark` class; observe theme via `.theme-observe`
+- Zero-config consumption — just import tokens.css and you're good
+
+The canonical UI package for the HiAi ecosystem. Design reference — **hiai-docs
 (oklch, shadcn-svelte new-york / slate). Source-only (no compilation): consumers
 import the source, which their Vite + Tailwind v4 builds.
 
@@ -67,7 +80,21 @@ bun run check   # svelte-kit sync && svelte-check — package gate (0 errors)
   in `src/app.d.ts`; implementation is provided by the consuming SvelteKit app. Decoupling via
   `currentPath` prop — candidate for future refactor.
 
-## Publishing
+## Ecosystem
 
-This package auto-publishes to npm on push to `main` via GitHub Actions.
-To publish manually: `bun run build && npm publish --access public`.
+- [@hiai-gg/hiai-observe](https://www.npmjs.com/package/@hiai-gg/hiai-observe) — telemetry & monitoring
+- [HiAi Dashboard](https://github.com/HiAi-gg/hiai-dashboard) — operator control plane
+- [HiAi Admin](https://github.com/HiAi-gg/hiai-admin) — tenant admin
+- [HiAi Kit](https://github.com/HiAi-gg/hiai-kit) — agent scaffolding CLI
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md).
+
+## License
+
+MIT © 2025 HiAi — see [LICENSE](./LICENSE).
