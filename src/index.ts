@@ -30,3 +30,5 @@ export { default as DataTable } from './components/DataTable.svelte';
 export { default as PageHeader } from './components/PageHeader.svelte';
 export { default as EmptyState } from './components/EmptyState.svelte';
 export { default as SettingsForm } from './components/SettingsForm.svelte';
+export { default as TipexEditor } from './components/editor/TipexEditor.svelte';
+export { default as EditorToolbar } from './components/editor/EditorToolbar.svelte';
