@@ -278,10 +278,10 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 	line-height: 1.2;
 }
 
-/* Scrollbar — unified cross-browser, miniature */
+/* Scrollbar — elegant, barely-visible, theme-adaptive */
 * {
 	scrollbar-width: thin;
-	scrollbar-color: var(--border) transparent;
+	scrollbar-color: color-mix(in srgb, var(--border) 55%, transparent) transparent;
 }
 ::-webkit-scrollbar {
 	width: 4px;
@@ -291,11 +291,11 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 	background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-	background: var(--border);
+	background: color-mix(in srgb, var(--border) 55%, transparent);
 	border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--muted-foreground);
+	background: color-mix(in srgb, var(--border) 85%, transparent);
 }
 ::-webkit-scrollbar-corner {
 	background: transparent;

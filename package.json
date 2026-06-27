@@ -11,6 +11,8 @@
     "./styles/*": "./src/styles/*"
   },
   "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
@@ -36,7 +38,10 @@
     "@sveltejs/kit": "^2.60.0",
     "@sveltejs/package": "^2.3.0",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@tailwindcss/vite": "^4.3.0",
     "svelte-check": "^4.0.0",
-    "typescript": "^5.7.0"
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.4.0"
   }
 }
