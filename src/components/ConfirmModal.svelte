@@ -32,11 +32,25 @@
     onCancel();
     reason = '';
   }
+
+  function handleBackdropKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
+      event.preventDefault();
+      handleCancel();
+    }
+  }
 </script>
 
 {#if open}
   <div class="fixed inset-0 z-50 flex items-center justify-center">
-    <div class="fixed inset-0 bg-background/80 backdrop-blur-sm" onclick={handleCancel}></div>
+    <div
+      class="fixed inset-0 bg-background/80 backdrop-blur-sm"
+      onclick={handleCancel}
+      onkeydown={handleBackdropKeydown}
+      role="button"
+      tabindex="0"
+      aria-label="Close dialog"
+    ></div>
 
     <div class="relative z-50 w-full max-w-md rounded-lg border bg-background p-6 shadow-lg">
       <h2 class="text-lg font-semibold">{title}</h2>
