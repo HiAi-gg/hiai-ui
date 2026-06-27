@@ -21,6 +21,9 @@
   import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/../components/ui/tabs/index.js';
   import Textarea from '$lib/../components/ui/textarea/textarea.svelte';
   import * as DropdownMenu from '$lib/../components/ui/dropdown-menu/index.js';
+  import * as Select from '$lib/../components/ui/select/index.js';
+  import { Checkbox, CheckboxIndicator } from '$lib/../components/ui/checkbox/index.js';
+  import { RadioGroup, RadioGroupItem } from '$lib/../components/ui/radio-group/index.js';
 
   import {
     Activity,
@@ -64,6 +67,69 @@
     },
   ];
 
+  const iconList = [
+    { codepoint: '1F30D', label: 'globe' },
+    { codepoint: '1F31C', label: 'moon' },
+    { codepoint: '1F355', label: 'pizza' },
+    { codepoint: '1F366', label: 'ice cream' },
+    { codepoint: '1F369', label: 'doughnut' },
+    { codepoint: '1F370', label: 'cake' },
+    { codepoint: '1F414', label: 'chicken' },
+    { codepoint: '1F427', label: 'penguin' },
+    { codepoint: '1F433', label: 'whale' },
+    { codepoint: '1F495', label: 'heart' },
+    { codepoint: '1F4A1', label: 'lightbulb' },
+    { codepoint: '1F525', label: 'fire' },
+    { codepoint: '1F5D1', label: 'wastebasket' },
+    { codepoint: '1F608', label: 'smiling devil' },
+    { codepoint: '1F609', label: 'wink' },
+    { codepoint: '1F60D', label: 'heart eyes' },
+    { codepoint: '1F60E', label: 'cool' },
+    { codepoint: '1F60F', label: 'smirk' },
+    { codepoint: '1F618', label: 'kiss' },
+    { codepoint: '1F619', label: 'kiss heart' },
+    { codepoint: '1F61A', label: 'kiss closed eyes' },
+    { codepoint: '1F61C', label: 'tongue wink' },
+    { codepoint: '1F621', label: 'rage' },
+    { codepoint: '1F622', label: 'cry' },
+    { codepoint: '1F623', label: 'persevere' },
+    { codepoint: '1F624', label: 'triumph' },
+    { codepoint: '1F62B', label: 'tired' },
+    { codepoint: '1F62C', label: 'grimace' },
+    { codepoint: '1F62D', label: 'sob' },
+    { codepoint: '1F62F', label: 'hushed' },
+    { codepoint: '1F630', label: 'anguish' },
+    { codepoint: '1F631', label: 'scream' },
+    { codepoint: '1F634', label: 'sleeping' },
+    { codepoint: '1F635-200D-1F4AB', label: 'dizzy face' },
+    { codepoint: '1F636-200D-1F32B-FE0F', label: 'face in clouds' },
+    { codepoint: '1F636', label: 'no mouth' },
+    { codepoint: '1F680', label: 'rocket' },
+    { codepoint: '1F90C', label: 'pinched fingers' },
+    { codepoint: '1F90F', label: 'pinching hand' },
+    { codepoint: '1F910', label: 'zipper mouth' },
+    { codepoint: '1F912', label: 'thermometer face' },
+    { codepoint: '1F913', label: 'nerd' },
+    { codepoint: '1F914', label: 'thinking' },
+    { codepoint: '1F916', label: 'robot' },
+    { codepoint: '1F928', label: 'raised eyebrow' },
+    { codepoint: '1F929', label: 'star-struck' },
+    { codepoint: '1F92D', label: 'hand over mouth' },
+    { codepoint: '1F92E', label: 'vomiting' },
+    { codepoint: '1F970', label: 'smiling hearts' },
+    { codepoint: '1F973', label: 'partying' },
+    { codepoint: '1F979', label: 'disguised' },
+    { codepoint: '1F9D0', label: 'yawn' },
+    { codepoint: '1F9D1-1F3FB-200D-1F373', label: 'cook' },
+    { codepoint: '1F9E1', label: 'orange heart' },
+    { codepoint: '1FAE0', label: 'melting face' },
+    { codepoint: '1FAE9', label: 'face holding back tears' },
+    { codepoint: '1FAF6', label: 'heart hands' },
+    { codepoint: '265F', label: 'chess pawn' },
+    { codepoint: 'E10C', label: 'E10C' },
+    { codepoint: 'E282', label: 'E282' },
+  ];
+
   // DataTable sample data
   const users = [
     { name: 'Ada Lovelace', role: 'Engineer', status: 'active' },
@@ -90,6 +156,17 @@
   let switchChecked = $state(false);
   let activeTab = $state('overview');
   let dropdownSelection = $state<string | null>(null);
+
+  // Select + forms state
+  let selectedFruit = $state('');
+  let feedbackName = $state('');
+  let feedbackEmail = $state('');
+  let feedbackMessage = $state('');
+  let feedbackSent = $state(false);
+  let subscribeEmail = $state('');
+  let subscribed = $state(false);
+  let feedbackTopics = $state<string[]>([]);
+  let feedbackSource = $state('');
 
   // ConfirmModal state
   let confirmOpen = $state(false);
@@ -347,6 +424,44 @@
                 </p>
               </CardContent>
             </Card>
+
+            <!-- Select -->
+            <Card>
+              <CardHeader>
+                <CardTitle>Select</CardTitle>
+                <CardDescription>Native select replacement with custom trigger and items.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <div class="space-y-1.5">
+                  <Label for="demo-select">Choose a fruit</Label>
+                  <Select.Root type="single" bind:value={selectedFruit}>
+                    <Select.Trigger class="w-[200px]">
+                      {#snippet child(triggerProps)}
+                        <Button {...triggerProps.props} variant="outline" role="combobox" class="w-[200px] justify-between">
+                          {selectedFruit || 'Pick a fruit…'}
+                          <ChevronDown class="h-4 w-4 opacity-50" />
+                        </Button>
+                      {/snippet}
+                    </Select.Trigger>
+                    <Select.Content>
+                      <Select.Item value="apple">Apple</Select.Item>
+                      <Select.Item value="banana">Banana</Select.Item>
+                      <Select.Item value="blueberry">Blueberry</Select.Item>
+                      <Select.Item value="grape">Grape</Select.Item>
+                      <Select.Item value="orange">Orange</Select.Item>
+                      <Select.Separator />
+                      <Select.Item value="other">Other</Select.Item>
+                    </Select.Content>
+                  </Select.Root>
+                </div>
+                <p class="text-xs text-muted-foreground">
+                  Selected:
+                  <span class="font-medium text-foreground">
+                    {selectedFruit || 'none'}
+                  </span>
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
@@ -428,6 +543,144 @@
             </CardFooter>
           </Card>
         </section>
+
+        <!-- Icon Showcase -->
+        <section class="space-y-4">
+          <h2 class="text-sm font-semibold tracking-wider text-muted-foreground uppercase">
+            Icons
+          </h2>
+          <Card>
+            <CardHeader>
+              <CardTitle>Recommended Icons</CardTitle>
+              <CardDescription>60 curated icons from OpenMoji. Click to copy codepoint.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div class="grid grid-cols-[repeat(auto-fill,minmax(72px,1fr))] gap-3">
+                {#each iconList as icon}
+                  <div class="flex flex-col items-center gap-1 rounded-md border p-2 hover:bg-accent/50 transition-colors" title={icon.codepoint}>
+                    <img src="/icons/{icon.codepoint}.svg" alt={icon.label} class="size-10" />
+                    <span class="text-[10px] text-muted-foreground text-center leading-tight">{icon.label}</span>
+                  </div>
+                {/each}
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        <!-- Feedback + Subscribe -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <!-- Feedback Form -->
+          <Card>
+            <CardHeader>
+              <CardTitle>Feedback</CardTitle>
+              <CardDescription>Send us a message.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {#if feedbackSent}
+                <div class="flex flex-col items-center gap-2 py-6 text-center">
+                  <p class="text-sm font-medium text-foreground">Thanks for your feedback!</p>
+                  <p class="text-xs text-muted-foreground">We'll review it shortly.</p>
+                  <Button variant="outline" size="sm" onclick={() => (feedbackSent = false)}>
+                    Send another
+                  </Button>
+                </div>
+              {:else}
+                <form
+                  class="space-y-3"
+                  onsubmit={(e) => {
+                    e.preventDefault();
+                    feedbackSent = true;
+                  }}
+                >
+                  <div class="space-y-1.5">
+                    <Label for="feedback-name">Name</Label>
+                    <Input id="feedback-name" placeholder="Your name" bind:value={feedbackName} required />
+                  </div>
+                  <div class="space-y-1.5">
+                    <Label for="feedback-email">Email</Label>
+                    <Input id="feedback-email" type="email" placeholder="you@example.com" bind:value={feedbackEmail} required />
+                  </div>
+                  <div class="space-y-1.5">
+                    <Label for="feedback-message">Message</Label>
+                    <Textarea id="feedback-message" placeholder="Tell us what you think…" bind:value={feedbackMessage} rows={3} required />
+                  </div>
+
+                  <!-- Checkbox group: Topics of interest -->
+                  <div class="space-y-2">
+                    <Label>Topics of interest</Label>
+                    <div class="flex flex-col gap-2">
+                      {#each ['Design', 'Development', 'Marketing', 'Support'] as topic}
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <Checkbox
+                            checked={feedbackTopics.includes(topic)}
+                            onCheckedChange={(checked: boolean) => {
+                              if (checked) {
+                                feedbackTopics = [...feedbackTopics, topic];
+                              } else {
+                                feedbackTopics = feedbackTopics.filter(t => t !== topic);
+                              }
+                            }}
+                          >
+                            <CheckboxIndicator class="" />
+                          </Checkbox>
+                          {topic}
+                        </label>
+                      {/each}
+                    </div>
+                  </div>
+
+                  <!-- Radio group: How did you hear about us? -->
+                  <div class="space-y-2">
+                    <Label>How did you hear about us?</Label>
+                    <RadioGroup value={feedbackSource} onValueChange={(v: string) => (feedbackSource = v)}>
+                      {#each ['Search', 'Social Media', 'Friend', 'Other'] as source}
+                        <label class="flex items-center gap-2 text-sm cursor-pointer">
+                          <RadioGroupItem value={source} />
+                          {source}
+                        </label>
+                      {/each}
+                    </RadioGroup>
+                  </div>
+
+                  <Button type="submit" class="w-full">Submit feedback</Button>
+                </form>
+              {/if}
+            </CardContent>
+          </Card>
+
+          <!-- Subscribe Form -->
+          <Card>
+            <CardHeader>
+              <CardTitle>Subscribe</CardTitle>
+              <CardDescription>Stay up to date with our newsletter.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {#if subscribed}
+                <div class="flex flex-col items-center gap-2 py-6 text-center">
+                  <p class="text-sm font-medium text-foreground">You're subscribed!</p>
+                  <p class="text-xs text-muted-foreground">Check your inbox for a confirmation email.</p>
+                  <Button variant="outline" size="sm" onclick={() => (subscribed = false)}>
+                    Unsubscribe
+                  </Button>
+                </div>
+              {:else}
+                <form
+                  class="space-y-3"
+                  onsubmit={(e) => {
+                    e.preventDefault();
+                    subscribed = true;
+                  }}
+                >
+                  <div class="space-y-1.5">
+                    <Label for="subscribe-email">Email address</Label>
+                    <Input id="subscribe-email" type="email" placeholder="you@example.com" bind:value={subscribeEmail} required />
+                  </div>
+                  <Button type="submit" class="w-full">Subscribe</Button>
+                </form>
+              {/if}
+            </CardContent>
+          </Card>
+        </div>
 
         <p class="pt-4 text-center text-xs text-muted-foreground">
           End of demo — scrollbar visible on the right edge.

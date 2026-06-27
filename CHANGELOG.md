@@ -5,6 +5,19 @@ All notable changes to @hiai-gg/hiai-ui will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 2026-06-27
+
+### Added
+- **Select primitive**: New `components/ui/select/` — accessible select with keyboard navigation and search filtering
+- **Checkbox primitive**: New `components/ui/checkbox/` — form-ready checkbox with indeterminate state
+- **RadioGroup primitive**: New `components/ui/radio-group/` — accessible radio group with keyboard navigation
+- **Feedback/Subscribe form demos**: Interactive form examples added to the test page
+- **OpenMoji icons**: 60 new SVG icons added to `static/icons/` for use across composites
+- **DropdownMenu demo**: Interactive dropdown menu example added to the test page
+
+### Fixed
+- **Select item highlighting**: Fixed hover/focus highlight state and layout alignment for select items
+
 ## [0.0.4] - 2026-06-21
 
 ### Fixed
