@@ -278,6 +278,26 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 	line-height: 1.2;
 }
 
+/* Scrollbar — unified cross-browser styling */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--border) transparent;
+}
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+::-webkit-scrollbar-thumb {
+	background: var(--border);
+	border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--muted-foreground);
+}
+
 /* ============================================
    5. Base — document (html/body, ::selection, .skip-link, date-inputs),
       .metric-* (StatsCard)
