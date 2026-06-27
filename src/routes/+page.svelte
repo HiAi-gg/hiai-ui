@@ -1,25 +1,25 @@
 <script lang="ts">
-  import AdminSidebar from '$lib/components/AdminSidebar.svelte';
-  import AdminHeader from '$lib/components/AdminHeader.svelte';
-  import PageHeader from '$lib/components/PageHeader.svelte';
-  import StatsCard from '$lib/components/StatsCard.svelte';
-  import StatusBadge from '$lib/components/StatusBadge.svelte';
-  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
-  import DataTable from '$lib/components/DataTable.svelte';
-  import ConfirmModal from '$lib/components/ConfirmModal.svelte';
-  import EmptyState from '$lib/components/EmptyState.svelte';
-  import SettingsForm from '$lib/components/SettingsForm.svelte';
+  import AdminSidebar from '$lib/../components/AdminSidebar.svelte';
+  import AdminHeader from '$lib/../components/AdminHeader.svelte';
+  import PageHeader from '$lib/../components/PageHeader.svelte';
+  import StatsCard from '$lib/../components/StatsCard.svelte';
+  import StatusBadge from '$lib/../components/StatusBadge.svelte';
+  import ThemeToggle from '$lib/../components/ThemeToggle.svelte';
+  import DataTable from '$lib/../components/DataTable.svelte';
+  import ConfirmModal from '$lib/../components/ConfirmModal.svelte';
+  import EmptyState from '$lib/../components/EmptyState.svelte';
+  import SettingsForm from '$lib/../components/SettingsForm.svelte';
   import type { NavGroup } from '$lib/types.js';
 
   // Primitives
-  import Badge from '$lib/components/ui/badge/badge.svelte';
-  import { Button } from '$lib/components/ui/button/index.js';
-  import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '$lib/components/ui/card/index.js';
-  import { Input } from '$lib/components/ui/input/index.js';
-  import Label from '$lib/components/ui/label/label.svelte';
-  import { Switch } from '$lib/components/ui/switch/index.js';
-  import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/components/ui/tabs/index.js';
-  import Textarea from '$lib/components/ui/textarea/textarea.svelte';
+  import Badge from '$lib/../components/ui/badge/badge.svelte';
+  import { Button } from '$lib/../components/ui/button/index.js';
+  import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '$lib/../components/ui/card/index.js';
+  import { Input } from '$lib/../components/ui/input/index.js';
+  import Label from '$lib/../components/ui/label/label.svelte';
+  import { Switch } from '$lib/../components/ui/switch/index.js';
+  import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/../components/ui/tabs/index.js';
+  import Textarea from '$lib/../components/ui/textarea/textarea.svelte';
 
   import { Activity, CreditCard, FileText, Inbox, Layers, Users, TrendingUp, Layout as LayoutIcon } from 'lucide-svelte';
 
