@@ -1,4 +1,10 @@
 <script lang="ts">
+  // `icon` accepts either a string (legacy emoji) or any Svelte 4/5 component
+  // (lucide-svelte icons etc). The runtime check (`typeof icon === 'string'`)
+  // handles both — the type is intentionally wide to bridge Svelte 4
+  // `typeof SvelteComponent` and Svelte 5 `Component` variance.
+  type IconProp = string | unknown;
+
   let {
     label,
     value,
@@ -10,7 +16,7 @@
     label: string;
     value: string | number;
     trend?: { value: number; direction: 'up' | 'down' };
-    icon?: string;
+    icon?: IconProp;
     accent?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'violet';
     href?: string;
   } = $props();
@@ -34,7 +40,14 @@
   <div class="flex items-center justify-between">
     <span class="metric-label">{label}</span>
     {#if icon}
-      <span class="text-xl {accentColors[accent]}" aria-hidden="true">{icon}</span>
+      <span class="{accentColors[accent]}" aria-hidden="true">
+        {#if typeof icon === 'string'}
+          <span class="text-xl">{icon}</span>
+        {:else}
+          {@const Icon = icon as any}
+          <Icon class="h-5 w-5" />
+        {/if}
+      </span>
     {/if}
   </div>
   <div class="metric-value {accentColors[accent]}">

@@ -56,7 +56,9 @@ $effect(() => {
       role="dialog"
       aria-modal="true"
     >
-      {@render children?.()}
+      {#if children}
+        {@render children()}
+      {/if}
     </div>
   </div>
 {/if}

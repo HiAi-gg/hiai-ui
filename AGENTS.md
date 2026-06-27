@@ -191,5 +191,5 @@ git clone https://github.com/HiAi-gg/hiai-ui.git
 ## Further Reading
 
 - [hiai-docs](https://github.com/HiAi-gg/hiai-docs) — design system source
-- [CONTRIBUTING.md](./CONTRIBUTOR.md) — development setup
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — development setup
 - [CHANGELOG.md](./CHANGELOG.md) — release history

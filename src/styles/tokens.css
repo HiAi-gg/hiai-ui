@@ -11,7 +11,7 @@
  *   3. .theme-observe  — dark-first variant for hiai-observe
  *   4. @theme          — Tailwind v4 token mapping
  *   5. base            — document + .metric-* (StatsCard)
- * See HIAI_UI_PACKAGE_PLAN.md (UI-1).
+ * See ../docs/implementation-plan.md (UI-1).
  */
 
 @source "../**/*.svelte";

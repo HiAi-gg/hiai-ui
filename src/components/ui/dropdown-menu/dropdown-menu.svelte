@@ -9,5 +9,7 @@ const {
 </script>
 
 <DropdownMenuPrimitive.Root {...restProps}>
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </DropdownMenuPrimitive.Root>

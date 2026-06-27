@@ -1,59 +1,36 @@
 {
   "name": "@hiai-gg/hiai-ui",
-  "version": "0.0.4",
+  "version": "0.1.0",
+  "private": true,
   "type": "module",
-  "files": ["dist", "src"],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HiAi-gg/hiai-ui"
-  },
-  "license": "MIT",
   "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "svelte": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./components/ui/*/index": "./src/components/ui/*/index.ts",
-    "./components/ui/*": "./src/components/ui/*/index.ts",
+    ".": "./src/index.ts",
     "./components/*": "./src/components/*",
     "./stores/*": "./src/stores/*",
     "./lib/*": "./src/lib/*",
     "./styles/*": "./src/styles/*"
   },
   "scripts": {
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "build": "svelte-package",
-    "prepublishOnly": "bun run build"
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "bits-ui": "^2.18.1",
-    "lucide-svelte": "^0.577.0",
-    "shadcn-svelte": "^1.2.7",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.6.0",
-    "tailwind-variants": "^3.2.2",
-    "@tiptap/core": "^3.18.0",
-    "@tiptap/pm": "^3.18.0",
-    "@tiptap/starter-kit": "^3.18.0",
+    "svelte": "^5.55.0",
+    "@tiptap/core": "^3.23.5",
+    "@tiptap/starter-kit": "^3.23.5",
+    "@tiptap/pm": "^3.23.5",
     "@tiptap/markdown": "^3.18.0",
     "@tiptap/extension-link": "^3.18.0",
     "@tiptap/extension-highlight": "^3.18.0",
     "@tiptap/extension-code-block-lowlight": "^3.18.0",
     "svelte-tiptap": "^3.0.1",
+    "bits-ui": "^2.18.1",
+    "lucide-svelte": "^0.577.0",
+    "shadcn-svelte": "^1.2.7",
     "lowlight": "^3.3.0"
   },
-  "peerDependencies": {
-    "svelte": "^5.55.0",
-    "@sveltejs/kit": "^2.65.0"
-  },
   "devDependencies": {
-    "svelte": "^5.55.0",
     "@sveltejs/adapter-auto": "^7.0.1",
-    "@sveltejs/kit": "^2.65.0",
+    "@sveltejs/kit": "^2.60.0",
     "@sveltejs/package": "^2.3.0",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "svelte-check": "^4.0.0",

@@ -18,5 +18,7 @@ function selectTab(tabValue: string) {
 </script>
 
 <div class={cn("w-full", className)} data-tabs-value={value}>
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </div>

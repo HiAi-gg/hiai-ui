@@ -32,27 +32,11 @@
     onCancel();
     reason = '';
   }
-
-  function handleKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      handleCancel();
-    }
-  }
 </script>
-
-<svelte:window onkeydown={open ? handleKeydown : undefined} />
 
 {#if open}
   <div class="fixed inset-0 z-50 flex items-center justify-center">
-    <div
-      class="fixed inset-0 bg-background/80 backdrop-blur-sm"
-      onclick={handleCancel}
-      onkeydown={handleKeydown}
-      role="button"
-      tabindex="-1"
-      aria-label="Close dialog"
-    ></div>
+    <div class="fixed inset-0 bg-background/80 backdrop-blur-sm" onclick={handleCancel}></div>
 
     <div class="relative z-50 w-full max-w-md rounded-lg border bg-background p-6 shadow-lg">
       <h2 class="text-lg font-semibold">{title}</h2>

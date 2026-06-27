@@ -10,5 +10,7 @@ const {
 </script>
 
 <p class={cn("text-sm text-muted-foreground", className)} {...restProps}>
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </p>

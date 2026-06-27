@@ -35,5 +35,7 @@ function handleClick() {
   )}
   onclick={handleClick}
 >
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </button>

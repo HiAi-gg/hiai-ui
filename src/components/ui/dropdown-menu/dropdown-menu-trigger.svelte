@@ -12,13 +12,15 @@ let {
 </script>
 
 {#if child}
-  <DropdownMenuPrimitive.Trigger bind:ref {...restProps}>
-    {#snippet child(snippetProps: { props: Record<string, unknown> })}
-      {@render child?.(snippetProps)}
-    {/snippet}
+  {#snippet renderChild(snippetProps: { props: Record<string, unknown> })}
+    {@render child?.(snippetProps)}
+  {/snippet}
+  <DropdownMenuPrimitive.Trigger bind:ref {...restProps} child={renderChild}>
   </DropdownMenuPrimitive.Trigger>
 {:else}
   <DropdownMenuPrimitive.Trigger bind:ref {...restProps}>
-    {@render children?.()}
+    {#if children}
+      {@render children()}
+    {/if}
   </DropdownMenuPrimitive.Trigger>
 {/if}

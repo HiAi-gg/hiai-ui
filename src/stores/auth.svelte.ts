@@ -32,7 +32,15 @@ export const authStore = {
     user = u;
   },
 
-  logout(loginPath = '/login') {
+  async logout(loginPath = '/login') {
+    try {
+      await fetch('/api/auth/sign-out', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch {
+      // logout locally even if the server is unreachable
+    }
     user = null;
     if (typeof window !== 'undefined') {
       window.location.href = loginPath;

@@ -1,48 +1,67 @@
 <script lang="ts">
-  import { page } from '$app/state';
-  import type { Snippet } from 'svelte';
+import { page } from '$app/state';
+import type { Snippet } from 'svelte';
+import { LogOut, User } from 'lucide-svelte';
+import * as DropdownMenu from './ui/dropdown-menu/index.js';
 
-  type Crumb = { label: string; href: string; current: boolean };
+type Crumb = { label: string; href: string; current: boolean };
 
-  let {
-    user,
-    onToggleSidebar,
-    actions,
-    breadcrumbs: breadcrumbsProp,
-    title,
-  }: {
-    user?: { name?: string; avatarUrl?: string; email?: string } | null;
-    onToggleSidebar?: () => void;
-    actions?: Snippet;
-    breadcrumbs?: Crumb[];
-    title?: string;
-  } = $props();
+// Display labels for known technical role IDs. Unknown roles fall through
+// to the raw role string (caller can override via the `roleLabel` prop).
+const DEFAULT_ROLE_LABELS: Record<string, string> = {
+  super_admin: 'Super Admin',
+  admin: 'Site Admin',
+  editor: 'Editor',
+  staff: 'Staff',
+};
 
-  const derivedBreadcrumbs: Crumb[] = $derived.by((): Crumb[] => {
-    if (breadcrumbsProp) return breadcrumbsProp;
-    const segments: string[] = page.url.pathname.split('/').filter(Boolean);
-    return segments.map((seg: string, i: number): Crumb => ({
+let {
+  user,
+  roleLabel,
+  onToggleSidebar,
+  actions,
+  breadcrumbs: breadcrumbsProp,
+  title,
+  profileHref,
+  onSignOut,
+}: {
+  user?: { name?: string; avatarUrl?: string; email?: string; role?: string | null } | null;
+  roleLabel?: string;
+  onToggleSidebar?: () => void;
+  actions?: Snippet;
+  breadcrumbs?: Crumb[];
+  title?: string;
+  profileHref?: string | null;
+  onSignOut?: () => void;
+} = $props();
+
+// Resolve once so the template stays declarative.
+const resolvedProfileHref = $derived(profileHref === undefined ? '/profile' : profileHref);
+
+// Display label for the user's role. Priority:
+//   1. Explicit `roleLabel` prop (caller-supplied)
+//   2. DEFAULT_ROLE_LABELS lookup for known technical IDs
+//   3. Raw role string
+//   4. Empty string when no role is provided
+const resolvedRoleLabel = $derived(
+  roleLabel ?? (user?.role ? (DEFAULT_ROLE_LABELS[user.role] ?? user.role) : ''),
+);
+
+const derivedBreadcrumbs: Crumb[] = $derived.by((): Crumb[] => {
+  if (breadcrumbsProp) return breadcrumbsProp;
+  const segments: string[] = page.url.pathname.split('/').filter(Boolean);
+  return segments.map(
+    (seg: string, i: number): Crumb => ({
       label: seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, ' '),
       href: `/${segments.slice(0, i + 1).join('/')}`,
       current: i === segments.length - 1,
-    }));
-  });
+    }),
+  );
+});
 </script>
 
 <header class="flex h-14 items-center justify-between border-b border-border bg-card px-4">
   <div class="flex items-center gap-4">
-    {#if onToggleSidebar}
-      <button
-        onclick={onToggleSidebar}
-        class="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        aria-label="Toggle sidebar"
-      >
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    {/if}
-
     {#if title}
       <h1 class="text-lg font-semibold">{title}</h1>
     {:else if derivedBreadcrumbs.length > 0}
@@ -70,27 +89,77 @@
       {@render actions()}
     {/if}
 
-    <button class="relative rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground" aria-label="Notifications">
-      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-      </svg>
-      <span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-destructive"></span>
-    </button>
-
     {#if user}
-      <div class="flex items-center gap-2 pl-2 border-l border-border">
-        {#if user.avatarUrl}
-          <img src={user.avatarUrl} alt={user.name || 'User'} class="h-8 w-8 rounded-full object-cover" />
-        {:else}
-          <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-semibold">
-            {user.name?.charAt(0)?.toUpperCase() || 'U'}
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          {#snippet child(childProps)}
+            <button
+              {...childProps.props}
+              class="flex items-center gap-2 pl-2 border-l border-border rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="Open user menu"
+            >
+              {#if user.avatarUrl}
+                <img src={user.avatarUrl} alt={user.name || 'User'} class="h-8 w-8 rounded-full object-cover" />
+              {:else}
+                <div class="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-semibold">
+                  {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                </div>
+              {/if}
+              <div class="hidden sm:block text-left">
+                <p class="text-sm font-medium leading-none">{user.name || 'User'}</p>
+                {#if resolvedRoleLabel}
+                  <p class="text-[10px] text-muted-foreground leading-none mt-0.5">{resolvedRoleLabel}</p>
+                {/if}
+              </div>
+            </button>
+          {/snippet}
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content align="end" class="w-56 p-0">
+          <div class="px-3 pt-1.5 pb-2.5">
+          <!-- Identity header: name + email -->
+          <div class="flex items-center gap-2 py-2.5">
+  <User class="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-sm font-medium leading-tight">
+                {resolvedRoleLabel || user.name || 'User'}
+              </p>
+              {#if user.email}
+                <p class="truncate text-xs leading-tight text-muted-foreground">{user.email}</p>
+              {/if}
+            </div>
           </div>
-        {/if}
-        <div class="hidden sm:block">
-          <p class="text-sm font-medium leading-none">{user.name || 'User'}</p>
-          <p class="text-[10px] text-muted-foreground leading-none mt-0.5">{user.email || 'admin'}</p>
-        </div>
-      </div>
+          <DropdownMenu.Separator class="-mx-3" />
+          {#if resolvedProfileHref}
+            <DropdownMenu.Item class="px-0">
+              {#snippet child(itemProps)}
+                <a
+                  {...itemProps.props}
+                  href={resolvedProfileHref}
+                class="flex items-center gap-2 w-full text-left cursor-pointer"
+                >
+                  <User class="h-4 w-4" aria-hidden="true" />
+                  Profile
+                </a>
+              {/snippet}
+            </DropdownMenu.Item>
+          {/if}
+          <DropdownMenu.Separator class="-mx-3" />
+          <DropdownMenu.Item class="px-0">
+            {#snippet child(itemProps)}
+              <button
+                {...itemProps.props}
+                type="button"
+                class="flex items-center gap-2 w-full text-left cursor-pointer"
+                onclick={() => onSignOut?.()}
+              >
+                <LogOut class="h-4 w-4" aria-hidden="true" />
+                Sign out
+              </button>
+            {/snippet}
+          </DropdownMenu.Item>
+          </div>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     {/if}
   </div>
 </header>

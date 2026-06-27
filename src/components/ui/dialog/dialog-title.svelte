@@ -10,5 +10,7 @@ const {
 </script>
 
 <h2 class={cn("text-lg font-semibold leading-none tracking-tight", className)} {...restProps}>
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </h2>

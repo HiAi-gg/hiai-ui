@@ -18,5 +18,7 @@ const {
   )}
   role="tablist"
 >
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </div>

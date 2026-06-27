@@ -16,5 +16,7 @@ let {
 </script>
 
 <div bind:this={ref} class={cn(badgeVariants({ variant }), className)} {...restProps}>
-  {@render children?.()}
+  {#if children}
+    {@render children()}
+  {/if}
 </div>

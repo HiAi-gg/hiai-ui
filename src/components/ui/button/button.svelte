@@ -20,7 +20,9 @@
 		class={cn(buttonVariants({ variant, size }), className)}
 		{...restProps as Record<string, unknown>}
 	>
-		{@render children?.()}
+		{#if children}
+			{@render children()}
+		{/if}
 	</a>
 {:else}
 	<button
@@ -28,6 +30,8 @@
 		class={cn(buttonVariants({ variant, size }), className)}
 		{...restProps}
 	>
-		{@render children?.()}
+		{#if children}
+			{@render children()}
+		{/if}
 	</button>
 {/if}
