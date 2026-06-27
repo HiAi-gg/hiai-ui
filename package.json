@@ -11,7 +11,13 @@
     "./components/*": "./src/components/*",
     "./stores/*": "./src/stores/*",
     "./lib/*": "./src/lib/*",
-    "./styles/*": "./src/styles/*"
+    "./styles/*": "./src/styles/*",
+    "./components/ui/button/index": "./src/components/ui/button/index.ts",
+    "./components/ui/dialog/index": "./src/components/ui/dialog/index.ts",
+    "./components/ui/input/index": "./src/components/ui/input/index.ts",
+    "./components/ui/tabs/index": "./src/components/ui/tabs/index.ts",
+    "./components/ui/switch/index": "./src/components/ui/switch/index.ts",
+    "./components/ui/dropdown-menu/index": "./src/components/ui/dropdown-menu/index.ts"
   },
   "scripts": {
     "dev": "vite dev",

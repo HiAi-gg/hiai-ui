@@ -20,8 +20,22 @@
   import { Switch } from '$lib/../components/ui/switch/index.js';
   import { Tabs, TabsList, TabsTrigger, TabsContent } from '$lib/../components/ui/tabs/index.js';
   import Textarea from '$lib/../components/ui/textarea/textarea.svelte';
+  import * as DropdownMenu from '$lib/../components/ui/dropdown-menu/index.js';
 
-  import { Activity, CreditCard, FileText, Inbox, Layers, Users, TrendingUp, Layout as LayoutIcon } from 'lucide-svelte';
+  import {
+    Activity,
+    ChevronDown,
+    CreditCard,
+    FileText,
+    Inbox,
+    Layers,
+    LogOut,
+    Settings,
+    TrendingUp,
+    User,
+    Users,
+    Layout as LayoutIcon,
+  } from 'lucide-svelte';
 
   // Scrollable sidebar demo content (long enough to overflow)
   const navItems = Array.from({ length: 30 }, (_, i) => ({
@@ -75,6 +89,7 @@
   let textValue = $state('');
   let switchChecked = $state(false);
   let activeTab = $state('overview');
+  let dropdownSelection = $state<string | null>(null);
 
   // ConfirmModal state
   let confirmOpen = $state(false);
@@ -251,6 +266,85 @@
                     <p class="text-sm text-muted-foreground">Activity tab content.</p>
                   </TabsContent>
                 </Tabs>
+              </CardContent>
+            </Card>
+
+            <!-- DropdownMenu -->
+            <Card>
+              <CardHeader>
+                <CardTitle>Dropdown Menu</CardTitle>
+                <CardDescription>Triggered menus with icons, separators, and live selection.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <!-- Plain menu with separator -->
+                <div class="flex items-center justify-between rounded-md border p-3">
+                  <div>
+                    <Label>Plain menu</Label>
+                    <p class="text-xs text-muted-foreground">Basic items, chevron trigger, destructive separator.</p>
+                  </div>
+                  <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                      {#snippet child(triggerProps)}
+                        <Button {...triggerProps.props} variant="outline" size="sm">
+                          Options
+                          <ChevronDown class="h-4 w-4" />
+                        </Button>
+                      {/snippet}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content align="end">
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'View')}>View</DropdownMenu.Item>
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'Edit')}>Edit</DropdownMenu.Item>
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'Duplicate')}>Duplicate</DropdownMenu.Item>
+                      <DropdownMenu.Separator />
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'Delete')}>Delete</DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Root>
+                </div>
+
+                <!-- Icon menu with separator -->
+                <div class="flex items-center justify-between rounded-md border p-3">
+                  <div>
+                    <Label>Account menu</Label>
+                    <p class="text-xs text-muted-foreground">Icon items separated by a divider.</p>
+                  </div>
+                  <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                      {#snippet child(triggerProps)}
+                        <Button
+                          {...triggerProps.props}
+                          variant="ghost"
+                          size="icon"
+                          aria-label="Open account menu"
+                        >
+                          <User class="h-4 w-4" />
+                        </Button>
+                      {/snippet}
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content align="end" class="w-48">
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'Profile')}>
+                        <User class="h-4 w-4" aria-hidden="true" />
+                        Profile
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'Settings')}>
+                        <Settings class="h-4 w-4" aria-hidden="true" />
+                        Settings
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Separator />
+                      <DropdownMenu.Item onclick={() => (dropdownSelection = 'Sign out')}>
+                        <LogOut class="h-4 w-4" aria-hidden="true" />
+                        Sign out
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Root>
+                </div>
+
+                <!-- Live state feedback -->
+                <p class="text-xs text-muted-foreground">
+                  Last action:
+                  <span class="font-medium text-foreground">
+                    {dropdownSelection ?? 'none yet'}
+                  </span>
+                </p>
               </CardContent>
             </Card>
           </div>
