@@ -11,3 +11,6 @@ todo.md
 AGENTS.md
 .gitignore
 .bob/
+
+# Publish dist/ output (overrides any earlier ignore patterns)
+!dist/

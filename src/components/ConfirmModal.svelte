@@ -1,4 +1,5 @@
 <script lang="ts">
+  /** @deprecated Use ConfirmDialog from './ui/confirm-dialog/ConfirmDialog.svelte' instead. Will be removed in v0.2.0. */
   let {
     open = false,
     title = 'Confirm Action',
