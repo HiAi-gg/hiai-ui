@@ -37,3 +37,4 @@ export { default as SearchBar } from './components/SearchBar.svelte';
 export { default as LiveIndicator } from './components/LiveIndicator.svelte';
 export { default as AnsiText } from './components/AnsiText.svelte';
 export { default as DocumentTitle } from './components/DocumentTitle.svelte';
+export { default as ChatWidget } from './components/ChatWidget.svelte';

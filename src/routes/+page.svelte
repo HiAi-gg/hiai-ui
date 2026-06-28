@@ -9,6 +9,13 @@
   import ConfirmModal from '$lib/../components/ConfirmModal.svelte';
   import EmptyState from '$lib/../components/EmptyState.svelte';
   import SettingsForm from '$lib/../components/SettingsForm.svelte';
+  import ConfirmDialog from '$lib/../components/ui/confirm-dialog/ConfirmDialog.svelte';
+  import DatePicker from '$lib/../components/DatePicker.svelte';
+  import ScrollToTop from '$lib/../components/ScrollToTop.svelte';
+  import SearchBar from '$lib/../components/SearchBar.svelte';
+  import LiveIndicator from '$lib/../components/LiveIndicator.svelte';
+  import DocumentTitle from '$lib/../components/DocumentTitle.svelte';
+  import ChatWidget from '$lib/../components/ChatWidget.svelte';
   import type { NavGroup } from '$lib/types.js';
 
   // Primitives
@@ -27,12 +34,15 @@
 
   import {
     Activity,
+    ArrowUp,
+    Calendar,
     ChevronDown,
     CreditCard,
     FileText,
     Inbox,
     Layers,
     LogOut,
+    Search,
     Settings,
     TrendingUp,
     User,
@@ -167,9 +177,22 @@
   let subscribed = $state(false);
   let feedbackTopics = $state<string[]>([]);
   let feedbackSource = $state('');
+  let mainEl = $state<HTMLElement>();
 
   // ConfirmModal state
   let confirmOpen = $state(false);
+
+  // ConfirmDialog state
+  let confirmDialogOpen = $state(false);
+
+  // DatePicker state
+  let datePickerValue = $state('');
+
+  // SearchBar state
+  let searchQuery = $state('');
+
+  // DocumentTitle state
+  let documentTitle = $state('Demo Title');
 
   function openConfirm() {
     confirmOpen = true;
@@ -190,7 +213,7 @@
   <!-- ===== Top bar — AdminHeader with ThemeToggle + version badge ===== -->
   <AdminHeader title="hiai-ui Design System">
     {#snippet actions()}
-      <Badge>v0.1.0</Badge>
+      <Badge>v0.0.7</Badge>
       <ThemeToggle />
     {/snippet}
   </AdminHeader>
@@ -215,7 +238,7 @@
     </aside>
 
     <!-- Main content — tall enough to scroll -->
-    <main class="flex-1 overflow-y-auto p-8">
+    <main bind:this={mainEl} class="flex-1 overflow-y-auto p-8">
       <div class="mx-auto max-w-5xl space-y-10 pb-[30vh]">
         <!-- PageHeader -->
         <PageHeader
@@ -534,7 +557,7 @@
             <CardContent>
               <div class="overflow-hidden rounded-lg border">
                 <div class="h-72 overflow-hidden">
-                  <AdminSidebar groups={sidebarGroups} appName="hiai" version="0.1.0" />
+                  <AdminSidebar groups={sidebarGroups} appName="hiai" version="0.0.7" />
                 </div>
               </div>
             </CardContent>
@@ -565,6 +588,140 @@
               </div>
             </CardContent>
           </Card>
+        </section>
+
+        <!-- ===== Extracted Components ===== -->
+        <section class="space-y-4">
+          <h2 class="text-sm font-semibold tracking-wider text-muted-foreground uppercase">
+            Extracted Components
+          </h2>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- ConfirmDialog -->
+            <Card>
+              <CardHeader>
+                <CardTitle>ConfirmDialog</CardTitle>
+                <CardDescription>
+                  Replacement for ConfirmModal — with busy state, destructive variant, and optional reason.
+                </CardDescription>
+              </CardHeader>
+              <CardContent class="flex flex-wrap gap-2">
+                <Button variant="outline" onclick={() => (confirmDialogOpen = true)}>
+                  Open ConfirmDialog
+                </Button>
+              </CardContent>
+            </Card>
+
+            <!-- DatePicker -->
+            <Card>
+              <CardHeader>
+                <CardTitle>DatePicker</CardTitle>
+                <CardDescription>Zero-dependency calendar date picker with CSS variable theming.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-3">
+                <div class="space-y-1.5">
+                  <Label>Pick a date</Label>
+                  <DatePicker bind:value={datePickerValue} />
+                </div>
+                <p class="text-xs text-muted-foreground">
+                  Selected:
+                  <span class="font-medium text-foreground">{datePickerValue || 'none'}</span>
+                </p>
+              </CardContent>
+            </Card>
+
+            <!-- SearchBar -->
+            <Card>
+              <CardHeader>
+                <CardTitle>SearchBar</CardTitle>
+                <CardDescription>Compact search input with clear button.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-3">
+                <SearchBar onSearch={(q) => (searchQuery = q)} />
+                {#if searchQuery}
+                  <p class="text-xs text-muted-foreground">
+                    Searching for:
+                    <span class="font-medium text-foreground">{searchQuery}</span>
+                  </p>
+                {/if}
+              </CardContent>
+            </Card>
+
+            <!-- LiveIndicator -->
+            <Card>
+              <CardHeader>
+                <CardTitle>LiveIndicator</CardTitle>
+                <CardDescription>Animated online/offline status with CSS ping animation.</CardDescription>
+              </CardHeader>
+              <CardContent class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <LiveIndicator connected={true} />
+                  <span class="text-sm">Connected</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <LiveIndicator connected={false} />
+                  <span class="text-sm">Disconnected</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <!-- DocumentTitle (InlineEdit) -->
+            <Card>
+              <CardHeader>
+                <CardTitle>DocumentTitle (InlineEdit)</CardTitle>
+                <CardDescription>Editable title with Enter-blur save, Escape-revert.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-3">
+                <DocumentTitle
+                  title={documentTitle}
+                  onUpdate={(t) => (documentTitle = t)}
+                />
+                <p class="text-xs text-muted-foreground">
+                  Current value:
+                  <span class="font-medium text-foreground">{documentTitle}</span>
+                </p>
+              </CardContent>
+            </Card>
+
+            <!-- ScrollToTop -->
+            <Card>
+              <CardHeader>
+                <CardTitle>ScrollToTop</CardTitle>
+                <CardDescription>
+                  Floating scroll-to-top button — scroll down and look bottom-right.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground">
+                  Scroll down to see the button appear at the bottom-right corner.
+                </p>
+              </CardContent>
+            </Card>
+
+            <!-- ChatWidget -->
+            <Card>
+              <CardHeader>
+                <CardTitle>ChatWidget</CardTitle>
+                <CardDescription>
+                  Floating AI chatbot — look bottom-left and click the message-circle button.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground">
+                  Self-contained glassmorphic chat drawer with markdown parsing, typing
+                  indicator, and localStorage persistence. Configure
+                  <code class="rounded bg-muted px-1 font-mono text-xs">apiEndpoint</code>,
+                  <code class="rounded bg-muted px-1 font-mono text-xs">botName</code>, and
+                  <code class="rounded bg-muted px-1 font-mono text-xs">accentColor</code>
+                  props. Click outside or press <kbd
+                    class="rounded border bg-muted px-1 font-mono text-[10px]">Esc</kbd
+                  > to close.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <ScrollToTop scrollTarget={mainEl} />
         </section>
 
         <!-- Feedback + Subscribe -->
@@ -699,4 +856,25 @@
   cancelLabel="Cancel"
   onConfirm={onConfirm}
   onCancel={onCancel}
+/>
+
+<!-- ===== ConfirmDialog ===== -->
+<ConfirmDialog
+  bind:open={confirmDialogOpen}
+  title="Delete Project"
+  description="Are you sure you want to delete this project? This action cannot be undone."
+  variant="destructive"
+  requireReason={true}
+  reasonLabel="Reason for deletion"
+  reasonPlaceholder="Please explain why..."
+  onConfirm={(reason) => {
+    confirmDialogOpen = false;
+  }}
+  onCancel={() => (confirmDialogOpen = false)}
+/>
+
+<!-- ===== ChatWidget (floating AI chatbot) ===== -->
+<ChatWidget
+  botName="hiai-ui Bot"
+  greeting="Hi! I'm the hiai-ui demo bot. Try sending me a message — since there's no API endpoint at /api/chat in this demo, you'll see the fallback response."
 />

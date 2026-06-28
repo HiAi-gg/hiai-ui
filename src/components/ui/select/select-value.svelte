@@ -8,8 +8,10 @@ let {
 }: Omit<SelectPrimitive.ValueProps, "children"> & { children?: Snippet } = $props();
 </script>
 
-<SelectPrimitive.Value {...restProps}>
-  {#if children}
+{#if children}
+  <SelectPrimitive.Value {...restProps}>
     {@render children()}
-  {/if}
-</SelectPrimitive.Value>
+  </SelectPrimitive.Value>
+{:else}
+  <SelectPrimitive.Value {...restProps} />
+{/if}
