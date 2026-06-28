@@ -228,7 +228,7 @@
 		color: var(--popover-foreground);
 		border: 1px solid var(--border);
 		border-radius: 8px;
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+		box-shadow: 0 4px 16px color-mix(in srgb, var(--foreground) 18%, transparent);
 	}
 	.dp-header {
 		display: flex;

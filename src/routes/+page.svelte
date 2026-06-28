@@ -5,6 +5,7 @@
   import StatsCard from '$lib/../components/StatsCard.svelte';
   import StatusBadge from '$lib/../components/StatusBadge.svelte';
   import ThemeToggle from '$lib/../components/ThemeToggle.svelte';
+  import ThemeSwitcher from '$lib/../components/ThemeSwitcher.svelte';
   import DataTable from '$lib/../components/DataTable.svelte';
   import ConfirmModal from '$lib/../components/ConfirmModal.svelte';
   import EmptyState from '$lib/../components/EmptyState.svelte';
@@ -15,7 +16,12 @@
   import SearchBar from '$lib/../components/SearchBar.svelte';
   import LiveIndicator from '$lib/../components/LiveIndicator.svelte';
   import DocumentTitle from '$lib/../components/DocumentTitle.svelte';
-  import ChatWidget from '$lib/../components/ChatWidget.svelte';
+  import ClassicHeader from '$lib/../components/header/ClassicHeader.svelte';
+import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
+  import QuickContact from '$lib/../components/QuickContact.svelte';
+  import LegalTabs from '$lib/../components/LegalTabs.svelte';
+  import ThemeProvider from '$lib/../components/ThemeProvider.svelte';
+  import { applyTheme } from '$lib/../lib/themes.js';
   import type { NavGroup } from '$lib/types.js';
 
   // Primitives
@@ -39,11 +45,20 @@
     ChevronDown,
     CreditCard,
     FileText,
+    Globe,
     Inbox,
     Layers,
     LogOut,
+    Mail,
+    MapPin,
+    Menu,
+    Moon,
+    Phone,
+    PhoneCall,
     Search,
+    Send,
     Settings,
+    Sun,
     TrendingUp,
     User,
     Users,
@@ -160,6 +175,41 @@
     },
   ];
 
+  // Left sidebar — collapsible + resizable (hiai-docs pattern)
+  let sidebarCollapsed = $state(false);
+  let sidebarWidth = $state(224); // w-56 = 224px default
+  let isResizing = $state(false);
+
+  $effect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('hiai-ui_sidebar_width');
+      if (saved) {
+        const parsed = parseInt(saved, 10);
+        if (!Number.isNaN(parsed) && parsed >= 180 && parsed <= 500) {
+          sidebarWidth = parsed;
+        }
+      }
+    }
+  });
+
+  $effect(() => {
+    if (isResizing) {
+      const onMove = (e: MouseEvent) => {
+        sidebarWidth = Math.max(180, Math.min(500, e.clientX));
+      };
+      const onUp = () => {
+        isResizing = false;
+        localStorage.setItem('hiai-ui_sidebar_width', String(sidebarWidth));
+      };
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+      return () => {
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('mouseup', onUp);
+      };
+    }
+  });
+
   // Local state for primitives demo
   let inputValue = $state('');
   let textValue = $state('');
@@ -193,6 +243,18 @@
 
   // DocumentTitle state
   let documentTitle = $state('Demo Title');
+  let editorContent = $state('# Hello from HiAiEditor\n\nThis is a **markdown**-enabled WYSIWYG editor with tables, task lists, and syntax highlighting.\n\nTry selecting text and using the toolbar above.');
+  let editorOutput = $state({ markdown: '', json: {} });
+
+  // Phase 4 — Theme/Header/Legal state
+  let currentTheme = $state('hiai');
+  let currentLang = $state('en');
+  let isDark = $state(false);
+
+  function setTheme(id: string) {
+    currentTheme = id;
+    applyTheme(id, isDark);
+  }
 
   function openConfirm() {
     confirmOpen = true;
@@ -209,32 +271,67 @@
   <title>hiai-ui — Component Library Demo</title>
 </svelte:head>
 
+<ThemeProvider defaultTheme="hiai">
 <div class="flex h-screen flex-col">
   <!-- ===== Top bar — AdminHeader with ThemeToggle + version badge ===== -->
   <AdminHeader title="hiai-ui Design System">
     {#snippet actions()}
-      <Badge>v0.0.7</Badge>
-      <ThemeToggle />
+      <Badge>v0.0.8</Badge>
+      <ThemeSwitcher current={currentTheme} onSelect={setTheme} />
+      <ThemeToggle bind:dark={isDark} themeId={currentTheme} />
     {/snippet}
   </AdminHeader>
 
   <!-- ===== Scrollable layout: sidebar + main ===== -->
   <div class="flex flex-1 overflow-hidden">
-    <!-- Left sidebar — scrollable to demo elegant scrollbar -->
-    <aside class="w-56 shrink-0 overflow-y-auto border-r bg-card">
-      <nav class="space-y-0.5 p-3">
-        <p class="mb-2 px-3 text-xs font-medium tracking-wider text-muted-foreground uppercase">
-          Scrollable Nav
-        </p>
-        {#each navItems as item (item.href)}
-          <a
-            href={item.href}
-            class="block rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-muted hover:text-foreground"
-          >
-            {item.label}
-          </a>
-        {/each}
-      </nav>
+    <!-- Left sidebar — collapsible + resizable (hiai-docs pattern) -->
+    <aside
+      class="relative flex flex-col shrink-0 border-r bg-card"
+      class:transition-[width]={!isResizing}
+      class:duration-200={!isResizing}
+      style={sidebarCollapsed ? 'width: 48px;' : `width: ${sidebarWidth}px;`}
+    >
+      <!-- Resize handle (only when not collapsed) -->
+      {#if !sidebarCollapsed}
+        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+        <div
+          role="separator"
+          tabindex="-1"
+          class="absolute right-0 top-0 z-50 h-full w-1 cursor-col-resize hover:bg-primary/50 transition-colors"
+          class:bg-primary={isResizing}
+          onmousedown={(e) => { e.preventDefault(); isResizing = true; }}
+        ></div>
+      {/if}
+
+      <!-- Collapse toggle button -->
+      <button
+        onclick={() => (sidebarCollapsed = !sidebarCollapsed)}
+        class="absolute -right-3 top-4 z-50 flex size-6 items-center justify-center rounded-full border border-border bg-background shadow-sm hover:bg-accent"
+        aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+      >
+        {#if sidebarCollapsed}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
+        {:else}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m15 15-3-3 3-3"/></svg>
+        {/if}
+      </button>
+
+      <!-- Sidebar content (hidden when collapsed) -->
+      {#if !sidebarCollapsed}
+        <nav class="flex-1 space-y-0.5 overflow-y-auto p-3">
+          <p class="mb-2 px-3 text-xs font-medium tracking-wider text-muted-foreground uppercase">
+            Scrollable Nav
+          </p>
+          {#each navItems as item (item.href)}
+            <a
+              href={item.href}
+              class="block rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-muted hover:text-foreground"
+            >
+              {item.label}
+            </a>
+          {/each}
+        </nav>
+      {/if}
     </aside>
 
     <!-- Main content — tall enough to scroll -->
@@ -703,7 +800,7 @@
               <CardHeader>
                 <CardTitle>ChatWidget</CardTitle>
                 <CardDescription>
-                  Floating AI chatbot — look bottom-left and click the message-circle button.
+                  Floating AI chatbot — accessible via QuickContact's chat button (bottom-left phone FAB).
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -715,8 +812,70 @@
                   <code class="rounded bg-muted px-1 font-mono text-xs">accentColor</code>
                   props. Click outside or press <kbd
                     class="rounded border bg-muted px-1 font-mono text-[10px]">Esc</kbd
-                  > to close.
+                  > to close. Access it via the QuickContact FAB at the bottom-left.
                 </p>
+              </CardContent>
+            </Card>
+
+            <!-- Theme Switcher -->
+            <Card>
+              <CardHeader>
+                <CardTitle>Theme Switcher</CardTitle>
+                <CardDescription>Switch between HiAi (teal/purple) and Webs (hot pink) themes.</CardDescription>
+              </CardHeader>
+              <CardContent class="flex items-center gap-3">
+                <Button variant={currentTheme === 'hiai' ? 'default' : 'outline'} size="sm" onclick={() => setTheme('hiai')}>HiAi</Button>
+                <Button variant={currentTheme === 'webs' ? 'default' : 'outline'} size="sm" onclick={() => setTheme('webs')}>Webs</Button>
+              </CardContent>
+            </Card>
+
+            <!-- ClassicHeader -->
+            <Card>
+              <CardHeader>
+                <CardTitle>ClassicHeader</CardTitle>
+                <CardDescription>Composable header with logo, nav, language selector, theme toggle, share button, and mobile burger.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground">Scroll to the top of the page to see the ClassicHeader demo in the header bar.</p>
+              </CardContent>
+            </Card>
+
+            <!-- QuickContact -->
+            <Card>
+              <CardHeader>
+                <CardTitle>QuickContact</CardTitle>
+                <CardDescription>Floating contact FAB with expandable channels.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground">Look for the floating phone icon at the bottom-left corner. Click to expand contact channels.</p>
+              </CardContent>
+            </Card>
+
+            <!-- HiAiEditor -->
+            <Card>
+              <CardHeader>
+                <CardTitle>HiAiEditor</CardTitle>
+                <CardDescription>Canonical WYSIWYG editor from hiai-docs with markdown, tables, and task lists.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <div class="flex-1 flex flex-col border border-border rounded-lg min-h-[500px] bg-card overflow-visible">
+                  <HiAiEditor
+                    content={editorContent}
+                    onUpdate={(output) => { editorOutput = output; }}
+                    placeholder="Start typing..."
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <!-- LegalTabs -->
+            <Card class="md:col-span-2">
+              <CardHeader>
+                <CardTitle>LegalTabs</CardTitle>
+                <CardDescription>Unified legal structure with Privacy, Terms, and Cookies tabs.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <LegalTabs appName="hiai-ui" contactEmail="hi@hiai-ui.dev" />
               </CardContent>
             </Card>
           </div>
@@ -843,6 +1002,15 @@
           End of demo — scrollbar visible on the right edge.
         </p>
       </div>
+
+      <!-- ===== QuickContact (sticky inside <main> so it floats with the content scroll) ===== -->
+      <QuickContact
+        channels={[
+          { type: 'email', label: 'Email', href: 'mailto:hi@hiai-ui.dev' },
+          { type: 'telegram', label: 'Telegram', href: 'https://t.me/hiai' },
+          { type: 'whatsapp', label: 'WhatsApp', href: 'https://wa.me/123456789' },
+        ]}
+      />
     </main>
   </div>
 </div>
@@ -873,8 +1041,4 @@
   onCancel={() => (confirmDialogOpen = false)}
 />
 
-<!-- ===== ChatWidget (floating AI chatbot) ===== -->
-<ChatWidget
-  botName="hiai-ui Bot"
-  greeting="Hi! I'm the hiai-ui demo bot. Try sending me a message — since there's no API endpoint at /api/chat in this demo, you'll see the fallback response."
-/>
+</ThemeProvider>
