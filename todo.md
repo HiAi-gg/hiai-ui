@@ -1,8 +1,8 @@
 # @hiai-gg/hiai-ui — todo.md
 
 > **Живой статус задач.** Обновляется при каждой сессии.
-> **Связано:** [AGENTS.md](./AGENTS.md) · [INDEX.md](../../INDEX.md) · [implementation-plan.md](./docs/implementation-plan.md)
-> **Примечание:** Этот пакет — shared UI design system в monorepo `packages/hiai-ui`. v0.0.4 stable.
+> **Связано:** [AGENTS.md](./AGENTS.md)
+> **Примечание:** Этот пакет — shared UI design system в monorepo `packages/hiai-ui`. v0.0.7 stable.
 
 ---
 
@@ -67,7 +67,7 @@
 | v0.0.3 publish to npm | ✅ DONE | OIDC trusted publishing |
 | v0.0.4 publish (broken barrel fix + restoration) | ✅ DONE | `package.json` exports fixed, StatusBadge/ConfirmModal/AdminSidebar restored, TipexEditor+EditorToolbar added to barrel |
 
-**Итого: 5/5 phases complete.** Package stable at v0.0.4.
+**Итого: 5/5 phases complete.** Package stable at v0.0.7.
 
 ---
 
@@ -88,7 +88,6 @@
 
 ### Roadmap references
 
-- [`docs/implementation-plan.md`](./docs/implementation-plan.md) — full 5-phase plan (UI-1 … UI-5, all completed)
 
 ### Token sync note
 
@@ -105,7 +104,7 @@ When `hiai-docs/frontend/src/app.css` changes:
 - [CHANGELOG.md](./CHANGELOG.md) — version history (v0.0.1 → v0.0.4)
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — development setup
 - [README.md](./README.md) — package overview & consumption contract
-- [docs/implementation-plan.md](./docs/implementation-plan.md) — phased plan (UI-1…UI-5)
+- 
 - [SECURITY.md](./SECURITY.md), [LICENSE](./LICENSE), [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) — standard docs
 
 ---

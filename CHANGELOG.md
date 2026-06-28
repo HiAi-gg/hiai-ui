@@ -18,6 +18,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - **Select item highlighting**: Fixed hover/focus highlight state and layout alignment for select items
 
+## [0.0.7] - 2026-06-28
+
+### Added
+- **ChatWidget**: Floating AI chatbot with glassmorphic drawer, markdown parsing, localStorage persistence, dark/light theme
+- **ConfirmDialog**: New confirmation dialog (shadcn Dialog-based, replaces ConfirmModal with requireReason, busy, variant props)
+- **DatePicker**: Zero-dependency calendar date picker with CSS variable theming
+- **ScrollToTop**: Floating scroll-to-top button with configurable scroll target
+- **SearchBar**: Compact search input with clear button and callback API
+- **LiveIndicator**: Animated online/offline status with CSS ping animation
+- **AnsiText**: ANSI escape code renderer (wraps parseAnsi from lib/ansi.ts)
+- **DocumentTitle**: Inline-edit document title with Enter-blur save and Escape-revert
+- **LinkDialog**: Insert/edit link dialog for the editor (URL normalization, Enter-to-submit)
+- **MarkdownToggle**: Raw markdown textarea editor with Tab-indent handler
+- **Editor extensions**: editorExtensions and markdownToJson in lib/editor/
+- **Chart utilities**: chart-utils.ts (Canvas2D: drawTimeSeriesChart, drawBarChart, drawDonutChart) and ansi.ts (ANSI parser) in lib/
+
+### Fixed
+- **Select value bug**: Empty selection when no children passed (Svelte 5 snippet compilation shadowing fix)
+- **ChatWidget dark theme**: Replaced non-existent surface-*/slate-* classes with canonical hiai-ui tokens
+- **ChatWidget positioning**: Moved to bottom-left to avoid conflict with ScrollToTop
+
+### Changed
+- **ConfirmModal deprecated**: Marked with @deprecated JSDoc; use ConfirmDialog instead
+- **Package name**: @hiai-gg/hiai-ui consistent across all docs (resolved workspace vs npm scope confusion)
+
 ## [0.0.4] - 2026-06-21
 
 ### Fixed

@@ -8,8 +8,8 @@
 ## Why @hiai-gg/hiai-ui
 
 - One source of truth for design tokens across the HiAi ecosystem
-- 10 opinionated composites (AdminSidebar, DataTable, StatsCard, ConfirmModal, SettingsForm…)
-- 10 shadcn-svelte primitives with deep-path imports for tree-shaking
+- 22 composites (AdminSidebar, ChatWidget, DatePicker, ConfirmDialog, ScrollToTop, SearchBar, LiveIndicator, DocumentTitle…)
+- 14 shadcn-svelte primitive categories (Button, Card, Select, Checkbox, RadioGroup…) with deep-path imports
 - Dark mode built-in via `.dark` class; observe theme via `.theme-observe`
 - Zero-config consumption — just import tokens.css and you're good
 

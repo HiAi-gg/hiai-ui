@@ -5,7 +5,7 @@
 @hiai-gg/hiai-ui — the canonical design system for the HiAi ecosystem. Role: **shared UI primitives and composites** that power hiai-observe, hiai-dashboard, hiai-admin, and hiai-kit. All projects import from the same source of truth for design tokens and components.
 
 **What agents should know before working here:**
-- Production status: **v0.0.2+ — stable, production-ready**
+- Production status: **v0.0.7 — stable, production-ready**
 - Consumers expect zero-config import: `import "@hiai-gg/hiai-ui/styles/tokens.css"` and deep-path component imports
 - Dark mode via `.dark` class; observe theme via `.theme-observe`
 - Zero external dependencies pulled on SSR — tree-shaking via deep-path imports
@@ -28,7 +28,7 @@ cd packages/hiai-ui
 bun install
 
 # Typecheck (package gate)
-bun run typecheck
+bun run check
 
 # Build (generates dist/)
 bun run build
@@ -38,12 +38,12 @@ bun run build
 
 | Path | Role |
 |---|---|
-| `src/components/ui/*` | shadcn-svelte primitives (Button, Card, Input, Badge, Dialog, DropdownMenu, Label, Switch, Tabs, Textarea) — deep-path only |
-| `src/components/*` | Composites (AdminSidebar, AdminHeader, StatsCard, StatusBadge, ConfirmModal, ThemeToggle, DataTable, PageHeader, EmptyState, SettingsForm) — barrel exported |
+| `src/components/ui/*` | shadcn-svelte primitives (Button, Card, Input, Badge, Dialog, DropdownMenu, Label, Switch, Tabs, Textarea, Select, Checkbox, RadioGroup, confirm-dialog) — deep-path only |
+| `src/components/*` | Composites (AdminSidebar, AdminHeader, ChatWidget, ConfirmDialog, DatePicker, ScrollToTop, SearchBar, LiveIndicator, DocumentTitle, plus StatsCard, StatusBadge, ThemeToggle, DataTable, PageHeader, EmptyState, SettingsForm, LinkDialog, MarkdownToggle) — barrel exported |
 | `src/styles/tokens.css` | Design tokens with layers: `:root` → `.dark` → `.theme-observe` → `@theme` → base |
 | `src/lib/*` | Shared utilities (authStore, cn, etc.) |
-| `src/stores.svelte.ts` | Svelte stores |
-| `tests/` | Test files |
+| `src/stores/*.svelte.ts` | Svelte stores |
+| `(none)` | Test files |
 
 ## Component Conventions
 
