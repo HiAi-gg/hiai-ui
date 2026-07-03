@@ -7,6 +7,7 @@ interface Props {
 	description?: string;
 	actionLabel?: string;
 	onAction?: () => void;
+	actionHref?: string;
 	class?: string;
 }
 
@@ -16,6 +17,7 @@ const {
 	description,
 	actionLabel,
 	onAction,
+	actionHref,
 	class: className,
 }: Props = $props();
 </script>
@@ -38,7 +40,14 @@ const {
     <p class="mt-1 max-w-sm text-sm text-muted-foreground">{description}</p>
   {/if}
 
-  {#if actionLabel && onAction}
+  {#if actionLabel && actionHref}
+    <a
+      href={actionHref}
+      class="mt-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+    >
+      {actionLabel}
+    </a>
+  {:else if actionLabel && onAction}
     <button
       onclick={onAction}
       class="mt-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
