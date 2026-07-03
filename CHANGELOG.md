@@ -18,6 +18,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - **Select item highlighting**: Fixed hover/focus highlight state and layout alignment for select items
 
+## [0.0.9] - 2026-07-03
+
+### Added
+- **ui/skeleton primitive**: Standard pulse skeleton component and `SkeletonText` helper for multi-line layout placeholder
+- **ui/sonner toast wrapper**: Wrapper around `svelte-sonner`'s Toaster, themed with design tokens, and imperative `toast` API export
+- **SiteFooter**: Column-based adaptive footer layout with brand logo/name, links, and custom asideSlot
+
+### Changed
+- **SiteHeader**: Made `nav` optional, added `authSlot` and `mobileAuthSlot` snippet props replacing fallback controls when provided
+- **EmptyState**: Added `actionHref` prop to support link-actions using native `<a>` tag with button classes
+
+## [0.0.8] - 2026-07-03
+
+- Internal releases and minor optimizations
+
 ## [0.0.7] - 2026-06-28
 
 ### Added

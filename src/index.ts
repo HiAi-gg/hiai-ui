@@ -56,3 +56,17 @@ export { default as LegalPage } from './components/LegalPage.svelte';
 export { default as LegalTabs } from './components/LegalTabs.svelte';
 export { default as ThemeProvider } from './components/ThemeProvider.svelte';
 export { THEME_HIAI, THEME_WEBS, THEME_REGISTRY, applyTheme, type ThemeDefinition } from './lib/themes.js';
+
+// New elements synced from consumer
+export { default as EmptyState } from './components/EmptyState.svelte';
+export {
+	default as SiteFooter,
+	type FooterLink,
+	type FooterColumn,
+	type SiteFooterConfig
+} from './components/SiteFooter.svelte';
+export { default as Skeleton } from './components/ui/skeleton/skeleton.svelte';
+export { default as SkeletonText } from './components/ui/skeleton/SkeletonText.svelte';
+export { default as Sonner } from './components/ui/sonner/sonner.svelte';
+export { toast } from './components/ui/sonner/index.js';
+

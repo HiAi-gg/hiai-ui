@@ -80,6 +80,81 @@ bun run check   # svelte-kit sync && svelte-check — package gate (0 errors)
   in `src/app.d.ts`; implementation is provided by the consuming SvelteKit app. Decoupling via
   `currentPath` prop — candidate for future refactor.
 
+## New Components (Synced from Consumer)
+
+### SiteHeader (Auth Slots)
+Now `SiteHeaderConfig` supports Svelte 5 snippets `authSlot` and `mobileAuthSlot` for custom user menus, and `nav` has been made optional:
+```svelte
+<script lang="ts">
+  import { SiteHeader } from "@hiai-gg/hiai-ui";
+</script>
+
+<SiteHeader config={{
+  logo: { alt: "My App" }
+}} authSlot={myAuthSnippet} />
+
+{#snippet myAuthSnippet()}
+  <button>Log in</button>
+{/snippet}
+```
+
+### EmptyState
+Supports optional link action via `actionHref` (renders an `<a>` tag with button styling):
+```svelte
+<EmptyState
+  title="No Documents"
+  description="Create your first document to get started."
+  actionLabel="Create Document"
+  actionHref="/documents/new"
+/>
+```
+
+### SiteFooter
+A brand new marketing footer component:
+```svelte
+<SiteFooter config={{
+  brand: { name: "HiAi", tagline: "Smart Agent Scaffolding" },
+  columns: [
+    { title: "Product", links: [{ label: "Features", href: "/features" }] }
+  ],
+  copyright: "© 2026 HiAi"
+}} />
+```
+
+### Skeleton / SkeletonText
+Primitives for loading states:
+```svelte
+<script lang="ts">
+  import { Skeleton, SkeletonText } from '@hiai-gg/hiai-ui/components/ui/skeleton/index';
+</script>
+
+<!-- Custom block skeleton -->
+<Skeleton class="h-4 w-64" />
+
+<!-- Paragraph helper -->
+<SkeletonText lines={3} />
+```
+
+### Sonner (Toasts)
+Toast notifications using `svelte-sonner`:
+```svelte
+<!-- Mount once in your root layout: -->
+<script lang="ts">
+  import { Sonner } from '@hiai-gg/hiai-ui/components/ui/sonner/index';
+</script>
+
+<Sonner />
+
+<!-- Trigger toast anywhere in your app: -->
+<script lang="ts">
+  import { toast } from '@hiai-gg/hiai-ui/components/ui/sonner/index';
+
+  function handleSave() {
+    toast.success("Settings saved!");
+  }
+</script>
+```
+
 ## Ecosystem
 
 - [@hiai-gg/hiai-observe](https://www.npmjs.com/package/@hiai-gg/hiai-observe) — telemetry & monitoring
