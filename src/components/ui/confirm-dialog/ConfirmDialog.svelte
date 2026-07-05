@@ -10,6 +10,7 @@
 	import { Button } from "../button/index";
 	import {
 		Dialog,
+		DialogContent,
 		DialogDescription,
 		DialogFooter,
 		DialogHeader,
@@ -86,42 +87,44 @@
 		}
 	}}
 >
-	<DialogHeader>
-		<DialogTitle>{title}</DialogTitle>
-		{#if description}
-			<DialogDescription>{description}</DialogDescription>
-		{/if}
-	</DialogHeader>
-
-	{#if requireReason}
-		<div class="grid gap-2 py-2">
-			<label for="confirm-dialog-reason" class="text-sm font-medium">
-				{reasonLabel}
-			</label>
-			<Textarea
-				id="confirm-dialog-reason"
-				bind:value={reason}
-				rows={3}
-				placeholder={reasonPlaceholder}
-				disabled={busy}
-			/>
-		</div>
-	{/if}
-
-	<DialogFooter>
-		<Button variant="outline" type="button" onclick={handleCancel} disabled={busy}>
-			{cancelLabel}
-		</Button>
-		<Button
-			type="button"
-			variant={variant === "destructive" ? "destructive" : "default"}
-			onclick={handleConfirm}
-			disabled={busy || reasonMissing}
-		>
-			{#if busy}
-				<Loader2 class="mr-1 size-4 animate-spin" />
+	<DialogContent>
+		<DialogHeader>
+			<DialogTitle>{title}</DialogTitle>
+			{#if description}
+				<DialogDescription>{description}</DialogDescription>
 			{/if}
-			{confirmLabel}
-		</Button>
-	</DialogFooter>
+		</DialogHeader>
+
+		{#if requireReason}
+			<div class="grid gap-2 py-2">
+				<label for="confirm-dialog-reason" class="text-sm font-medium">
+					{reasonLabel}
+				</label>
+				<Textarea
+					id="confirm-dialog-reason"
+					bind:value={reason}
+					rows={3}
+					placeholder={reasonPlaceholder}
+					disabled={busy}
+				/>
+			</div>
+		{/if}
+
+		<DialogFooter>
+			<Button variant="outline" type="button" onclick={handleCancel} disabled={busy}>
+				{cancelLabel}
+			</Button>
+			<Button
+				type="button"
+				variant={variant === "destructive" ? "destructive" : "default"}
+				onclick={handleConfirm}
+				disabled={busy || reasonMissing}
+			>
+				{#if busy}
+					<Loader2 class="mr-1 size-4 animate-spin" />
+				{/if}
+				{confirmLabel}
+			</Button>
+		</DialogFooter>
+	</DialogContent>
 </Dialog>

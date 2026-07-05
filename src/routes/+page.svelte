@@ -276,7 +276,7 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
   <!-- ===== Top bar — AdminHeader with ThemeToggle + version badge ===== -->
   <AdminHeader title="hiai-ui Design System">
     {#snippet actions()}
-      <Badge>v0.0.8</Badge>
+      <Badge>v0.1.0</Badge>
       <ThemeSwitcher current={currentTheme} onSelect={setTheme} />
       <ThemeToggle bind:dark={isDark} themeId={currentTheme} />
     {/snippet}

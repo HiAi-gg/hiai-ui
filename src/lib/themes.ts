@@ -7,7 +7,7 @@
  * `var(--border)`, `var(--font-heading)`, `var(--font-body)` re-skin
  * automatically — same DOM, same components, only the palette swaps.
  *
- * Two themes ship in v0.0.8:
+ * Two themes ship in v0.1.0:
  *   - hiai: HiAi canon (oklch / shadcn-svelte new-york on slate).
  *     Light primary `#20b2aa` (teal), dark primary `#9932cc` (purple).
  *   - webs: Webs Laser Grid (hot-pink / lime / pure-black).

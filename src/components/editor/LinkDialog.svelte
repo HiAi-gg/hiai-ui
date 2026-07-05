@@ -4,6 +4,7 @@
 	import { Button } from "$lib/../components/ui/button/index.js";
 	import {
 		Dialog,
+		DialogContent,
 		DialogFooter,
 		DialogHeader,
 		DialogTitle,
@@ -83,30 +84,32 @@
 </script>
 
 <Dialog bind:open>
-	<DialogHeader>
-		<DialogTitle>{label}</DialogTitle>
-	</DialogHeader>
-	<div class="link-dialog-body">
-		<label for="link-url" class="link-dialog-label">
-			{urlLabel}
-		</label>
-		<Input
-			id="link-url"
-			bind:ref={inputEl}
-			bind:value={url}
-			type="url"
-			placeholder="https://example.com"
-			onkeydown={(e: KeyboardEvent) => { if (e.key === "Enter") { e.preventDefault(); handleApply(); } }}
-		/>
-	</div>
-	<DialogFooter>
-		<Button variant="outline" type="button" onclick={handleCancel}>
-			{cancelLabel}
-		</Button>
-		<Button type="button" onclick={handleApply}>
-			{saveLabel}
-		</Button>
-	</DialogFooter>
+	<DialogContent>
+		<DialogHeader>
+			<DialogTitle>{label}</DialogTitle>
+		</DialogHeader>
+		<div class="link-dialog-body">
+			<label for="link-url" class="link-dialog-label">
+				{urlLabel}
+			</label>
+			<Input
+				id="link-url"
+				bind:ref={inputEl}
+				bind:value={url}
+				type="url"
+				placeholder="https://example.com"
+				onkeydown={(e: KeyboardEvent) => { if (e.key === "Enter") { e.preventDefault(); handleApply(); } }}
+			/>
+		</div>
+		<DialogFooter>
+			<Button variant="outline" type="button" onclick={handleCancel}>
+				{cancelLabel}
+			</Button>
+			<Button type="button" onclick={handleApply}>
+				{saveLabel}
+			</Button>
+		</DialogFooter>
+	</DialogContent>
 </Dialog>
 
 <style>

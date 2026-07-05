@@ -1,4 +1,5 @@
 <script lang="ts">
+import { setContext } from "svelte";
 import type { Snippet } from "svelte";
 
 let {
@@ -11,24 +12,16 @@ let {
 	children?: Snippet;
 } = $props();
 
-let contentRef: HTMLDivElement | null = $state(null);
-
 function close() {
 	open = false;
 	onOpenChange?.(false);
 }
 
-function handleKeydown(e: KeyboardEvent) {
-	if (e.key === "Escape") close();
-}
-
-function handleBackdropClick(e: MouseEvent) {
-	// The outer wrapper has a backdrop div and a content div as children,
-	// so `e.target === e.currentTarget` is not reliable (clicks on the
-	// backdrop div match). Check that the click is outside the dialog
-	// content panel instead.
-	if (contentRef && !contentRef.contains(e.target as Node)) close();
-}
+setContext("DIALOG_CONTEXT", {
+	get open() { return open; },
+	set open(v) { open = v; onOpenChange?.(v); },
+	close
+});
 
 $effect(() => {
 	if (open) {
@@ -42,23 +35,6 @@ $effect(() => {
 });
 </script>
 
-{#if open}
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div
-    class="fixed inset-0 z-50 flex items-center justify-center"
-    onkeydown={handleKeydown}
-    onclick={handleBackdropClick}
-  >
-    <div class="fixed inset-0 bg-black/80" aria-hidden="true"></div>
-    <div
-      bind:this={contentRef}
-      class="relative z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg sm:rounded-lg"
-      role="dialog"
-      aria-modal="true"
-    >
-      {#if children}
-        {@render children()}
-      {/if}
-    </div>
-  </div>
+{#if children}
+	{@render children()}
 {/if}
