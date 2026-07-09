@@ -1,3 +1,33 @@
+/**
+ * @hiai-gg/hiai-ui — DropdownMenu primitive
+ *
+ * A menu triggered by clicking a button or element. Supports items,
+ * sub-menus, separators, checkboxes, and radio groups.
+ *
+ * ## Usage
+ *
+ * ```svelte
+ * <DropdownMenu.Root>
+ *   <DropdownMenu.Trigger>
+ *     {#snippet child(triggerProps)}
+ *       <Button {...triggerProps.props}>Open Menu</Button>
+ *     {/snippet}
+ *   </DropdownMenu.Trigger>
+ *   <DropdownMenu.Content>
+ *     <DropdownMenu.Item onSelect={() => console.log("Edit")}>
+ *       Edit
+ *     </DropdownMenu.Item>
+ *     <DropdownMenu.Separator />
+ *     <DropdownMenu.Item onSelect={() => console.log("Delete")}>
+ *       Delete
+ *     </DropdownMenu.Item>
+ *   </DropdownMenu.Content>
+ * </DropdownMenu.Root>
+ * ```
+ *
+ * @module
+ */
+
 import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
 import Root from "./dropdown-menu.svelte";
 import Content from "./dropdown-menu-content.svelte";

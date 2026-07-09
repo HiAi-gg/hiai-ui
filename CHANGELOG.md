@@ -5,6 +5,23 @@ All notable changes to @hiai-gg/hiai-ui will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-07-09
+
+### Added
+- **Popover primitive**: New `components/ui/popover/` — accessible popover with trigger, content, and close actions; bits-ui v2 wrapper
+- **Command primitive**: New `components/ui/command/` — accessible command palette with input, list, empty, group, heading, item, separator, viewport, loading states
+- **Combobox primitive**: New `components/ui/combobox/` — accessible combobox with input, trigger, content, item, group, heading, viewport, separator, scroll buttons
+- **ContextMenu primitive**: New `components/ui/context-menu/` — accessible right-click menu with item, group, sub-menu, checkbox, radio variants
+- **Menubar primitive**: New `components/ui/menubar/` — accessible horizontal menu bar with nested menu layers, item, group, sub-menu, checkbox, radio variants
+- **New JSDoc/API documentation**: Select and DropdownMenu index exports now include usage examples and type documentation
+- **Playground demos**: Interactive demos for all new primitives on the test page
+- **Component usage docs**: Markdown docs for Select, DropdownMenu, Popover, Command, Combobox, ContextMenu, Menubar in `docs/components/`
+- **Test suite**: 42 tests across 5 test files including unit, integration, and a11y (axe-core) coverage for all primitives
+- **Deep-path exports**: Each new primitive is exported under `./components/ui/<name>/index` for tree-shakeable consumption
+
+### Changed
+- **Export policy**: Primitives remain deep-path-only; no barrel export from package root
+
 ## [0.0.6] - 2026-06-27
 
 ### Added

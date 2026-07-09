@@ -37,6 +37,11 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
   import * as Select from '$lib/../components/ui/select/index.js';
   import { Checkbox, CheckboxIndicator } from '$lib/../components/ui/checkbox/index.js';
   import { RadioGroup, RadioGroupItem } from '$lib/../components/ui/radio-group/index.js';
+  import * as Popover from '$lib/../components/ui/popover/index.js';
+  import * as Command from '$lib/../components/ui/command/index.js';
+  import * as Combobox from '$lib/../components/ui/combobox/index.js';
+  import * as ContextMenu from '$lib/../components/ui/context-menu/index.js';
+  import * as Menubar from '$lib/../components/ui/menubar/index.js';
 
   import {
     Activity,
@@ -237,6 +242,14 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
 
   // DatePicker state
   let datePickerValue = $state('');
+
+  // New primitives state
+  let popoverOpen = $state(false);
+  let commandValue = $state('');
+  let comboboxValue = $state('');
+  let menubarValue = $state('');
+  let contextMenuAction = $state('');
+  let menubarTheme = $state('auto');
 
   // SearchBar state
   let searchQuery = $state('');
@@ -583,6 +596,196 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
               </CardContent>
             </Card>
           </div>
+        </section>
+
+        <!-- ===== New Primitives (Popover, Command, Combobox, ContextMenu, Menubar) ===== -->
+        <section class="space-y-4">
+          <h2 class="text-sm font-semibold tracking-wider text-muted-foreground uppercase">
+            New Primitives
+          </h2>
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- Popover -->
+            <Card>
+              <CardHeader>
+                <CardTitle>Popover</CardTitle>
+                <CardDescription>Controlled/uncontrolled floating content with Close button.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-3">
+                <div class="flex items-center justify-between rounded-md border p-3">
+                  <div>
+                    <Label>Uncontrolled</Label>
+                    <p class="text-xs text-muted-foreground">Click to toggle popover.</p>
+                  </div>
+                  <Popover.Root>
+                    <Popover.Trigger>
+                      {#snippet child(triggerProps)}
+                        <Button {...triggerProps.props} variant="outline" size="sm">
+                          Open
+                        </Button>
+                      {/snippet}
+                    </Popover.Trigger>
+                    <Popover.Content>
+                      <div class="space-y-2">
+                        <h4 class="font-medium text-sm">Popover Content</h4>
+                        <p class="text-xs text-muted-foreground">This popover is uncontrolled. Click outside or press Escape to close.</p>
+                      </div>
+                    </Popover.Content>
+                  </Popover.Root>
+                </div>
+                <div class="flex items-center justify-between rounded-md border p-3">
+                  <div>
+                    <Label>Controlled</Label>
+                    <p class="text-xs text-muted-foreground">State: {popoverOpen ? 'open' : 'closed'}</p>
+                  </div>
+                  <Popover.Root bind:open={popoverOpen}>
+                    <Popover.Trigger>
+                      {#snippet child(triggerProps)}
+                        <Button {...triggerProps.props} variant="outline" size="sm">
+                          Toggle
+                        </Button>
+                      {/snippet}
+                    </Popover.Trigger>
+                    <Popover.Content>
+                      <div class="space-y-2">
+                        <h4 class="font-medium text-sm">Controlled Popover</h4>
+                        <Popover.Close>
+                          <Button variant="ghost" size="sm" class="w-full">Close me</Button>
+                        </Popover.Close>
+                      </div>
+                    </Popover.Content>
+                  </Popover.Root>
+                </div>
+              </CardContent>
+            </Card>
+
+            <!-- Command -->
+            <Card>
+              <CardHeader>
+                <CardTitle>Command</CardTitle>
+                <CardDescription>Searchable command palette with filtering and keyboard nav.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Command.Root bind:value={commandValue} class="w-full border rounded-lg">
+                  <Command.Input placeholder="Search..." />
+                  <Command.List>
+                    <Command.Empty>No results found.</Command.Empty>
+                    <Command.Group>
+                      <Command.GroupHeading>Actions</Command.GroupHeading>
+                      <Command.Item value="copy">Copy</Command.Item>
+                      <Command.Item value="cut">Cut</Command.Item>
+                      <Command.Item value="paste">Paste</Command.Item>
+                    </Command.Group>
+                    <Command.Separator />
+                    <Command.Group>
+                      <Command.GroupHeading>Navigation</Command.GroupHeading>
+                      <Command.Item value="home">Go Home</Command.Item>
+                      <Command.Item value="settings">Settings</Command.Item>
+                    </Command.Group>
+                  </Command.List>
+                </Command.Root>
+                <p class="mt-2 text-xs text-muted-foreground">
+                  Selected: <span class="font-medium">{commandValue || 'none'}</span>
+                </p>
+              </CardContent>
+            </Card>
+
+            <!-- Combobox -->
+            <Card>
+              <CardHeader>
+                <CardTitle>Combobox</CardTitle>
+                <CardDescription>Searchable select with type-to-filter.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-3">
+                <Combobox.Root type="single" bind:value={comboboxValue}>
+                  <Combobox.Input placeholder="Search fruits..." />
+                  <Combobox.Content>
+                    <Combobox.Item value="apple">Apple</Combobox.Item>
+                    <Combobox.Item value="banana">Banana</Combobox.Item>
+                    <Combobox.Item value="cherry">Cherry</Combobox.Item>
+                    <Combobox.Item value="dragonfruit">Dragonfruit</Combobox.Item>
+                    <Combobox.Item value="elderberry">Elderberry</Combobox.Item>
+                  </Combobox.Content>
+                </Combobox.Root>
+                <p class="text-xs text-muted-foreground">
+                  Selected: <span class="font-medium">{comboboxValue || 'none'}</span>
+                </p>
+                <p class="text-[10px] text-muted-foreground/60">
+                  Combobox has an editable Input (type to filter). Select and Combobox share similar content/item APIs.
+                </p>
+              </CardContent>
+            </Card>
+
+            <!-- ContextMenu -->
+            <Card>
+              <CardHeader>
+                <CardTitle>ContextMenu</CardTitle>
+                <CardDescription>Right-click context menu.</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-2">
+                <ContextMenu.Root>
+                  <ContextMenu.Trigger>
+                    <div class="h-24 w-full border border-dashed rounded-md flex items-center justify-center text-sm text-muted-foreground cursor-context-menu select-none">
+                      Right-click here
+                    </div>
+                  </ContextMenu.Trigger>
+                  <ContextMenu.Content>
+                    <ContextMenu.Item onSelect={() => (contextMenuAction = 'Edit')}>Edit</ContextMenu.Item>
+                    <ContextMenu.Item onSelect={() => (contextMenuAction = 'Duplicate')}>Duplicate</ContextMenu.Item>
+                    <ContextMenu.Separator />
+                    <ContextMenu.Item onSelect={() => (contextMenuAction = 'Delete')}>Delete</ContextMenu.Item>
+                  </ContextMenu.Content>
+                </ContextMenu.Root>
+                <p class="text-xs text-muted-foreground">
+                  Last action: <span class="font-medium">{contextMenuAction || 'none'}</span>
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <!-- Menubar (full-width, horizontal) -->
+          <Card>
+            <CardHeader>
+              <CardTitle>Menubar</CardTitle>
+              <CardDescription>Top-level horizontal menu bar with nested dropdowns, checkboxes, and radio groups.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Menubar.Root>
+                <Menubar.Menu>
+                  <Menubar.Trigger>File</Menubar.Trigger>
+                  <Menubar.Content>
+                    <Menubar.Item onSelect={() => (menubarValue = 'New')}>New</Menubar.Item>
+                    <Menubar.Item onSelect={() => (menubarValue = 'Open')}>Open</Menubar.Item>
+                    <Menubar.Separator />
+                    <Menubar.Item onSelect={() => (menubarValue = 'Exit')}>Exit</Menubar.Item>
+                  </Menubar.Content>
+                </Menubar.Menu>
+                <Menubar.Menu>
+                  <Menubar.Trigger>Edit</Menubar.Trigger>
+                  <Menubar.Content>
+                    <Menubar.Item onSelect={() => (menubarValue = 'Undo')}>Undo</Menubar.Item>
+                    <Menubar.Item onSelect={() => (menubarValue = 'Redo')}>Redo</Menubar.Item>
+                  </Menubar.Content>
+                </Menubar.Menu>
+                <Menubar.Menu>
+                  <Menubar.Trigger>View</Menubar.Trigger>
+                  <Menubar.Content>
+                    <Menubar.CheckboxItem>Show Toolbar</Menubar.CheckboxItem>
+                    <Menubar.CheckboxItem>Show Sidebar</Menubar.CheckboxItem>
+                    <Menubar.Separator />
+                    <Menubar.RadioGroup bind:value={menubarTheme}>
+                      <Menubar.RadioItem value="auto">Auto</Menubar.RadioItem>
+                      <Menubar.RadioItem value="light">Light</Menubar.RadioItem>
+                      <Menubar.RadioItem value="dark">Dark</Menubar.RadioItem>
+                    </Menubar.RadioGroup>
+                  </Menubar.Content>
+                </Menubar.Menu>
+              </Menubar.Root>
+              <p class="mt-2 text-xs text-muted-foreground">
+                Last action: <span class="font-medium">{menubarValue || 'none'}</span>
+                &middot; Theme: <span class="font-medium">{menubarTheme}</span>
+              </p>
+            </CardContent>
+          </Card>
         </section>
 
         <!-- ===== Composites ===== -->
