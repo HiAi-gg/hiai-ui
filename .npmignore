@@ -14,3 +14,6 @@ AGENTS.md
 
 # Publish dist/ output (overrides any earlier ignore patterns)
 !dist/
+
+# But exclude test artifacts from dist (compiled from src/__tests__/)
+dist/__tests__/
