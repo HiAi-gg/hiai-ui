@@ -7,6 +7,10 @@ export type { LegalSection, LegalSectionBlock, LegalMeta, LegalContentModel, Leg
 // Lib
 export { createApi, type ApiClient } from './lib/api.js';
 export { parseAnsi, type AnsiSpan } from './lib/ansi.js';
+export {
+	runThemeSpread,
+	type ThemeSpreadOrigin,
+} from './lib/theme-spread.js';
 
 // Editor lib
 export { getEditorExtensions, editorExtensions } from './lib/editor/editorExtensions.js';

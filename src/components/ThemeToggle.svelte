@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { Sun, Moon } from 'lucide-svelte';
+	import { tick } from 'svelte';
 	import { applyTheme } from '../lib/themes.js';
+	import { runThemeSpread } from '../lib/theme-spread.js';
 
 	let {
 		storageKey = 'hiai-theme',
@@ -12,16 +14,27 @@
 		dark?: boolean;
 	} = $props();
 
-	function toggle() {
-		dark = !dark;
-		document.documentElement.classList.toggle('dark', dark);
-		applyTheme(themeId, dark);
+	function persist(next: boolean) {
+		dark = next;
+		document.documentElement.classList.toggle('dark', next);
+		applyTheme(themeId, next);
 		try {
-			localStorage.setItem(storageKey, dark ? 'dark' : 'light');
+			localStorage.setItem(storageKey, next ? 'dark' : 'light');
 		} catch {
 			// Storage may be unavailable (Safari private mode, SSR, quota).
 			// Theme still applies in-memory for this session.
 		}
+	}
+
+	function toggle(event: MouseEvent) {
+		const next = !dark;
+		void runThemeSpread(
+			async () => {
+				persist(next);
+				await tick();
+			},
+			{ x: event.clientX, y: event.clientY },
+		);
 	}
 
 	$effect(() => {

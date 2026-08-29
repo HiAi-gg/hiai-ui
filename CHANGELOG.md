@@ -5,6 +5,13 @@ All notable changes to @hiai-gg/hiai-ui will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-08-29
+
+### Added
+- **Theme spread**: `runThemeSpread(apply, origin)` circular View Transition from a click. Chrome/Edge clip-reveal; Safari/Firefox and `prefers-reduced-motion` apply instantly. No DOM snapshot clone.
+- **ThemeToggle** uses the spread helper from the pointer coordinates.
+- **Inter Variable** ships with `tokens.css` (`--font-sans`) so consumers match the product UI typeface without a local copy.
+
 ## [0.1.1] - 2026-07-09
 
 ### Added
