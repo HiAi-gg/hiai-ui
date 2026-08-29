@@ -14,8 +14,6 @@
  * See ../docs/implementation-plan.md (UI-1).
  */
 
-@import "@fontsource-variable/inter/wght.css";
-
 @source "../**/*.svelte";
 
 /* ============================================
