@@ -5,7 +5,7 @@ A floating container that appears near a trigger element. **Highest priority pri
 ## Import
 
 ```ts
-import * as Popover from "@hiai-gg/hiai-ui/components/ui/popover";
+import * as Popover from "@hiai-gg/hiai-ui/components/ui/popover/index";
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ import * as Popover from "@hiai-gg/hiai-ui/components/ui/popover";
 
 ```svelte
 <script lang="ts">
-  import * as Popover from "@hiai-gg/hiai-ui/components/ui/popover";
+  import * as Popover from "@hiai-gg/hiai-ui/components/ui/popover/index";
   import { Button } from "@hiai-gg/hiai-ui/components/ui/button";
 
   let open = $state(false);

@@ -8,7 +8,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [tailwindcss(), sveltekit()],
-  server: { port: 50203, strictPort: true },
+  server: { port: 5210, strictPort: true, host: "127.0.0.1" },
+  preview: { port: 5210, strictPort: true, host: "127.0.0.1" },
   resolve: {
     alias: {
       '@tiptap/core': resolve(__dirname, './node_modules/@tiptap/core'),

@@ -4,6 +4,10 @@
 </script>
 
 <div data-testid="popover-fixture">
+  <button type="button" data-testid="popover-force-open" onclick={() => (open = true)}>
+    Force open
+  </button>
+  <span data-testid="popover-state">{open ? "open" : "closed"}</span>
   <Popover.Root bind:open>
     <Popover.Trigger class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors border border-input bg-transparent px-3 py-2 shadow-sm">
       Toggle Popover

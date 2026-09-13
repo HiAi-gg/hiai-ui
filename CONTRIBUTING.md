@@ -6,9 +6,9 @@ Thank you for your interest in contributing to @hiai-gg/hiai-ui! This document p
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) 1.3+
+- [Bun](https://bun.sh/) 1.4+
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) 18+ (for npm compatibility checks)
+- [Node.js](https://nodejs.org/) 22+ (for npm compatibility checks)
 
 ### Setup
 
@@ -25,11 +25,14 @@ bun install
 
 | Command | Description |
 |---|---|
-| `bun run check` | TypeScript type checking and package validation |
-| `bun run dev` | Start development mode (if applicable) |
-| `bun run build` | Build the package |
-| `bun run test` | Run tests |
-| `bun run typecheck` | TypeScript type check |
+| `bun run check` | `svelte-kit sync` + `svelte-check` |
+| `bun run test` | Vitest (jsdom). Not browser/e2e coverage. |
+| `bun run build` | `svelte-package` → `dist/` |
+| `bun run dev` | Playground at `http://127.0.0.1:5210/hiai-ui/` |
+
+Primitives (`src/components/ui/`) are **deep-path only**: `@hiai-gg/hiai-ui/components/ui/<name>/index`. Do not add them to `src/index.ts`. Fonts stay consumer-owned (`tokens.css` must not `@import` webfonts).
+
+See [docs/primitives-reconciliation.md](docs/primitives-reconciliation.md) and [docs/playground.md](docs/playground.md).
 
 ## Project Structure
 
@@ -117,11 +120,12 @@ chore: update dependencies to latest versions
 
 1. Create a feature branch from `main`
 2. Make your changes following the code guidelines
-3. Run `bun run typecheck` and fix any errors
+3. Run `bun run check` and fix any errors
 4. Run `bun run test` and ensure all tests pass
-5. Push and create a PR
-6. Ensure CI passes
-7. Request review
+5. Run `bun run build`
+6. Push and create a PR
+7. Ensure the **test / check / build** CI job passes (it does not publish)
+8. Request review
 
 ## Release Process
 
@@ -134,7 +138,7 @@ Follow [Semantic Versioning](https://semver.org/):
 
 ### Publishing
 
-This package uses OIDC trusted publishing on tag push:
+Ordinary CI (PR / push to `main`) runs check, build, and test only. Publishing is **not** automatic on PR. OIDC trusted publishing runs on **tag push** (`v*`) or `workflow_dispatch`:
 
 ```bash
 # Update version in package.json

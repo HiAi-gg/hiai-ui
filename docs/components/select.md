@@ -5,13 +5,13 @@ A native-select replacement with custom trigger, dropdown items, groups, separat
 ## Import
 
 ```ts
-import { SelectRoot, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupHeading, SelectSeparator, SelectValue } from "@hiai-gg/hiai-ui/components/ui/select";
+import { SelectRoot, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectGroupHeading, SelectSeparator, SelectValue } from "@hiai-gg/hiai-ui/components/ui/select/index";
 ```
 
 Also available via star import:
 
 ```ts
-import * as Select from "@hiai-gg/hiai-ui/components/ui/select";
+import * as Select from "@hiai-gg/hiai-ui/components/ui/select/index";
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ import * as Select from "@hiai-gg/hiai-ui/components/ui/select";
 
 ```svelte
 <script lang="ts">
-  import * as Select from "@hiai-gg/hiai-ui/components/ui/select";
+  import * as Select from "@hiai-gg/hiai-ui/components/ui/select/index";
   import { Button } from "@hiai-gg/hiai-ui/components/ui/button";
 
   let value = $state("");

@@ -5,7 +5,7 @@ A right-click context menu that appears at the cursor position.
 ## Import
 
 ```ts
-import * as ContextMenu from "@hiai-gg/hiai-ui/components/ui/context-menu";
+import * as ContextMenu from "@hiai-gg/hiai-ui/components/ui/context-menu/index";
 ```
 
 ## Usage

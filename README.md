@@ -14,8 +14,9 @@
 - Zero-config consumption — just import tokens.css and you're good
 
 The canonical UI package for the HiAi ecosystem. Design reference — **hiai-docs
-(oklch, shadcn-svelte new-york / slate). Source-only (no compilation): consumers
-import the source, which their Vite + Tailwind v4 builds.
+(oklch, shadcn-svelte new-york / slate). Consumers import **compiled `dist/`**
+(`svelte-package`). Install from npm (`@hiai-gg/hiai-ui@0.1.3`), `file:`, or
+`github:HiAi-gg/hiai-ui#…`. Do not mix with `@webs/ui`.
 
 > See the project documentation for more details.
 
@@ -23,32 +24,32 @@ import the source, which their Vite + Tailwind v4 builds.
 
 | Layer | Location | Import |
 |---|---|---|
-| **Tokens** | `src/styles/tokens.css` | `@import "@hiai-gg/hiai-ui/styles/tokens.css";` |
-| **Primitives** (shadcn) | `src/components/ui/*` | `import { Button } from "@hiai-gg/hiai-ui/components/ui/button";` |
-| **Composites** | `src/components/*` | `import { AdminSidebar, StatsCard } from "@hiai-gg/hiai-ui";` |
-| **Stores / lib** | `src/stores`, `src/lib` | `import { authStore, cn } from "@hiai-gg/hiai-ui";` |
+| **Tokens** | `dist/styles/tokens.css` | `@import "@hiai-gg/hiai-ui/styles/tokens.css";` |
+| **Primitives** (shadcn) | `dist/components/ui/*` | `import { Button } from "@hiai-gg/hiai-ui/components/ui/button/index";` |
+| **Composites** | `dist/components/*` | `import { AdminSidebar, StatsCard } from "@hiai-gg/hiai-ui";` |
+| **Stores / lib** | `dist/stores`, `dist/lib` | `import { authStore } from "@hiai-gg/hiai-ui";` |
 
 Primitives are deep-path only (not in main barrel) to avoid pulling
 `bits-ui`/`lucide` on SSR when unnecessary.
 
 ## How to connect (contract — enforced by every hiai project)
 
-1. Add dependency:
+1. Add dependency (npm 0.1.3, `file:../hiai-ui`, or `github:HiAi-gg/hiai-ui#main` — `workspace:*` only inside a real workspace):
    ```jsonc
    // package.json
-   "dependencies": { "@hiai-gg/hiai-ui": "workspace:*" }
+   "dependencies": { "@hiai-gg/hiai-ui": "0.1.3" }
    ```
-2. Import tokens in root `app.css` (after Tailwind):
+2. Import tokens in root `app.css` (after Tailwind). **Do not** load Inter from this package — consumers self-host `@fontsource-variable/inter` (or equivalent):
    ```css
    @import "tailwindcss";
    @import "@hiai-gg/hiai-ui/styles/tokens.css";
    ```
 3. Let Tailwind v4 scan the package classes — in `app.css`:
    ```css
-   @source "../../../packages/hiai-ui/src";
+   @source "../node_modules/@hiai-gg/hiai-ui/dist";
    ```
    (path — relative to the file; adjust for project depth).
-4. Use components from `@hiai-gg/hiai-ui` / `@hiai-gg/hiai-ui/components/ui/*`.
+4. Use composites from `@hiai-gg/hiai-ui` and primitives from `@hiai-gg/hiai-ui/components/ui/<name>/index`.
 5. **Remove local duplicates** of components and tokens.
 6. Theme: `.dark` class on `<html>` (toggle via `ThemeToggle`); for observe — `.theme-observe`.
 
@@ -71,7 +72,13 @@ Brand accent: light `#20b2aa`, dark `#9932cc`.
 
 ```bash
 bun run check   # svelte-kit sync && svelte-check — package gate (0 errors)
+bun run test    # vitest (jsdom). Not browser/e2e coverage.
+bun run build   # svelte-package → dist/
 ```
+
+CI (`.github/workflows/ci.yml`) runs those three on pull requests and pushes to `main`. npm publish is **not** part of that workflow; it stays tag-only (`v*`) / `workflow_dispatch` in `.github/workflows/publish.yml`.
+
+Playground / LAN ports / version pins: [docs/playground.md](docs/playground.md). Primitive plan vs exports: [docs/primitives-reconciliation.md](docs/primitives-reconciliation.md).
 
 ## Notes
 
@@ -158,7 +165,6 @@ Toast notifications using `svelte-sonner`:
 ## Ecosystem
 
 - [@hiai-gg/hiai-observe](https://www.npmjs.com/package/@hiai-gg/hiai-observe) — telemetry & monitoring
-- [HiAi Dashboard](https://github.com/HiAi-gg/hiai-dashboard) — operator control plane
 - [HiAi Admin](https://github.com/HiAi-gg/hiai-admin) — tenant admin
 - [HiAi Kit](https://github.com/HiAi-gg/hiai-kit) — agent scaffolding CLI
 

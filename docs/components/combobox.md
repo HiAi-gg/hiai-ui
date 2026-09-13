@@ -5,7 +5,7 @@ A searchable select / autocomplete component. Unlike **Command** (a command pale
 ## Import
 
 ```ts
-import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox";
+import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox/index";
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox";
 
 ```svelte
 <script lang="ts">
-  import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox";
+  import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox/index";
 
   let value = $state("");
 </script>
@@ -100,9 +100,52 @@ import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox";
 | Filter/search built-in | ✅ (via Input) | ✅ (via `shouldFilter`) | ❌ |
 | Multi-select | ✅ | ❌ | ✅ |
 
+## Empty, loading, and fetch errors (compose, do not wrap)
+
+Combobox has no `Empty` / `Loading` parts (unlike Command). Do not add an `options={[]}` convenience wrapper — that would diverge from the shipped bits-ui API.
+
+Consumer pattern (hiai-admin searchable tenant / user lists, currently still on Select):
+
+```svelte
+<script lang="ts">
+  import * as Combobox from "@hiai-gg/hiai-ui/components/ui/combobox/index";
+
+  let value = $state("");
+  let loading = $state(false);
+  let fetchError = $state<string | null>(null);
+  let options = $state<{ value: string; label: string }[]>([]);
+</script>
+
+<Combobox.Root type="single" bind:value>
+  <Combobox.Input
+    placeholder="Search tenants…"
+    aria-invalid={fetchError ? true : undefined}
+    aria-describedby={fetchError ? "tenant-combobox-error" : undefined}
+  />
+  <Combobox.Content>
+    {#if loading}
+      <p class="px-2 py-1.5 text-sm text-muted-foreground">Loading…</p>
+    {:else if fetchError}
+      <p id="tenant-combobox-error" role="alert" class="px-2 py-1.5 text-sm text-destructive">
+        {fetchError}
+      </p>
+    {:else if options.length === 0}
+      <p role="status" class="px-2 py-1.5 text-sm text-muted-foreground">No tenants match.</p>
+    {:else}
+      {#each options as opt (opt.value)}
+        <Combobox.Item value={opt.value}>{opt.label}</Combobox.Item>
+      {/each}
+    {/if}
+  </Combobox.Content>
+</Combobox.Root>
+```
+
+Command palettes that need built-in empty/loading should keep using **Command** (`Command.Empty`, `Command.Loading`) as hiai-admin `CommandPalette.svelte` already does.
+
 ## Accessibility
 
 - `role="combobox"`, `aria-autocomplete="list"` on Input
 - `aria-expanded` managed automatically
 - Keyboard: type to filter, arrow keys navigate, Enter to select, Escape to close
 - Focus trap within content when open
+- Form errors: pass `aria-invalid` and `aria-describedby` through `Combobox.Input` (same as `Input`)

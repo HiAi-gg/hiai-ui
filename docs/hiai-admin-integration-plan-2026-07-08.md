@@ -1,3 +1,6 @@
+<!-- portfolio-audit:2026-09-13 -->
+> **Source reconciliation — 2026-09-13:** Read [TEAM_BACKLOG.md](../TEAM_BACKLOG.md) before using the tasks/status below. Ordinary CI now checks main/PR; explicit tag/manual publish is separate. Package remains0.1.3; current acceptance is recorded in TEAM_BACKLOG. Runtime/remote-CI claims retain their original dates; they were not revalidated in this pass. The linked task ledger holds execution status; this document retains its original product direction/history.
+
 # hiai-ui Team: hiai-admin Integration Plan
 *Generated from hiai-admin dropdown/select audit context*
 

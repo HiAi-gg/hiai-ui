@@ -5,7 +5,7 @@ A searchable command palette / quick-actions component. Use for keyboard-driven 
 ## Import
 
 ```ts
-import * as Command from "@hiai-gg/hiai-ui/components/ui/command";
+import * as Command from "@hiai-gg/hiai-ui/components/ui/command/index";
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ import * as Command from "@hiai-gg/hiai-ui/components/ui/command";
 
 ```svelte
 <script lang="ts">
-  import * as Command from "@hiai-gg/hiai-ui/components/ui/command";
+  import * as Command from "@hiai-gg/hiai-ui/components/ui/command/index";
 
   let selected = $state("");
 </script>

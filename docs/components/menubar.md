@@ -5,7 +5,7 @@ A top-level horizontal menu bar with nested dropdown menus.
 ## Import
 
 ```ts
-import * as Menubar from "@hiai-gg/hiai-ui/components/ui/menubar";
+import * as Menubar from "@hiai-gg/hiai-ui/components/ui/menubar/index";
 ```
 
 ## Usage

@@ -23,6 +23,7 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
   import ThemeProvider from '$lib/../components/ThemeProvider.svelte';
   import { applyTheme } from '$lib/../lib/themes.js';
   import type { NavGroup } from '$lib/types.js';
+  import { base } from '$app/paths';
 
   // Primitives
   import Badge from '$lib/../components/ui/badge/badge.svelte';
@@ -289,7 +290,7 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
   <!-- ===== Top bar — AdminHeader with ThemeToggle + version badge ===== -->
   <AdminHeader title="hiai-ui Design System">
     {#snippet actions()}
-      <Badge>v0.1.0</Badge>
+      <Badge>v0.1.3</Badge>
       <ThemeSwitcher current={currentTheme} onSelect={setTheme} />
       <ThemeToggle bind:dark={isDark} themeId={currentTheme} />
     {/snippet}
@@ -881,7 +882,7 @@ import HiAiEditor from '$lib/../components/editor/HiAiEditor.svelte';
               <div class="grid grid-cols-[repeat(auto-fill,minmax(72px,1fr))] gap-3">
                 {#each iconList as icon}
                   <div class="flex flex-col items-center gap-1 rounded-md border p-2 hover:bg-accent/50 transition-colors" title={icon.codepoint}>
-                    <img src="/icons/{icon.codepoint}.svg" alt={icon.label} class="size-10" />
+                    <img src="{base}/icons/{icon.codepoint}.svg" alt={icon.label} class="size-10" />
                     <span class="text-[10px] text-muted-foreground text-center leading-tight">{icon.label}</span>
                   </div>
                 {/each}

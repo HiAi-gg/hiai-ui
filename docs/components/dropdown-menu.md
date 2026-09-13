@@ -5,7 +5,7 @@ A click-triggered menu with items, sub-menus, separators, checkboxes, and radio 
 ## Import
 
 ```ts
-import * as DropdownMenu from "@hiai-gg/hiai-ui/components/ui/dropdown-menu";
+import * as DropdownMenu from "@hiai-gg/hiai-ui/components/ui/dropdown-menu/index";
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ import * as DropdownMenu from "@hiai-gg/hiai-ui/components/ui/dropdown-menu";
 
 ```svelte
 <script lang="ts">
-  import * as DropdownMenu from "@hiai-gg/hiai-ui/components/ui/dropdown-menu";
+  import * as DropdownMenu from "@hiai-gg/hiai-ui/components/ui/dropdown-menu/index";
   import { Button } from "@hiai-gg/hiai-ui/components/ui/button";
 </script>
 
