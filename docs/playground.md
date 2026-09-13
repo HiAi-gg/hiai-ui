@@ -12,9 +12,9 @@ Library playground is the SvelteKit app in this repo (`src/routes/+page.svelte`)
 | Primitives | bits-ui `^2.18.1` |
 | Install | `npm:@hiai-gg/hiai-ui@0.1.3`, `file:../hiai-ui`, or `github:HiAi-gg/hiai-ui#…` — not `workspace:*` unless the consumer is in the same workspace |
 
-Ordinary CI is `.github/workflows/ci.yml` (`test / check / build`) on **push to `main` and pull requests**. That workflow does **not** publish.
+Ordinary CI is `.github/workflows/ci.yml` (`build` then `check` then `test`) on **push to `main` and pull requests**. That workflow does **not** publish. Build is first because `dist/` is gitignored and DistConsumerFixture imports package exports that resolve there.
 
-npm publish stays **tag-only**: `.github/workflows/publish.yml` on `v*` tags or `workflow_dispatch`. The publish job still runs check and build first. Last published tag: `v0.1.3`. Bun in both workflows is **1.4.0**.
+npm publish stays **tag-only**: `.github/workflows/publish.yml` on `v*` tags or `workflow_dispatch`. Its check job uses the same **build → check → test** order. Last published tag: `v0.1.3`. Bun in both workflows is **1.4.0**.
 
 ## LAN (verified, not restarted)
 

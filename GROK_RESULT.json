@@ -4,56 +4,26 @@
     {
       "id": "HIAI-UI-T01",
       "status": "review",
-      "summary": "Reconciled 2026-07-08 Popover/Command/Combobox plans against existing deep-path exports; primitives not rebuilt. Independent review passed this task."
+      "summary": "Reconciled 2026-07-08 Popover/Command/Combobox plans against existing deep-path exports; primitives not rebuilt."
     },
     {
       "id": "HIAI-UI-T02",
       "status": "review",
-      "summary": "Removed production document Escape listener. Bits UI owns nested/layer Escape and preventDefault. Test harness: focus-then-click trigger, native Escape, KeyboardEvent clone init (jsdom only). Dist: package.json exports map + import() of those files; fixture specifiers resolved via exports plugin. 65/65 jsdom; not browser/visual."
+      "summary": "Bits UI Escape/dist consumer unchanged this pass. DistConsumerFixture still typed against package exports (no exclude/shim). CI order was the clean-runner failure."
     },
     {
       "id": "HIAI-UI-T03",
       "status": "review",
-      "summary": "Ordinary CI on PR/main; publish tag-only. Vite 5210 + base /hiai-ui. Independent review passed config portion. LAN/visual unverified; service not restarted."
+      "summary": "CI and publish check jobs now build then check then test. publish-npm builds before typecheck. Cause: gitignored dist missing on clean runner before svelte-package. Remote CI not claimed."
     }
   ],
   "changed_files": [
-    ".gitignore",
-    "AGENTS.md",
     ".github/workflows/ci.yml",
     ".github/workflows/publish.yml",
-    "vite.config.ts",
-    "vitest.config.ts",
-    "svelte.config.js",
-    "src/routes/+page.svelte",
-    "src/components/ui/input/input.svelte",
-    "src/components/ui/combobox/combobox-input.svelte",
-    "src/components/ui/popover/popover.svelte",
-    "src/__tests__/setup.ts",
-    "src/__tests__/a11y.test.ts",
-    "src/__tests__/exports.test.ts",
-    "src/__tests__/consumer-dist.test.ts",
-    "src/__tests__/package-exports.ts",
-    "src/__tests__/fixtures/PopoverFixture.svelte",
-    "src/__tests__/fixtures/ComboboxFixture.svelte",
-    "src/__tests__/fixtures/InputErrorFixture.svelte",
-    "src/__tests__/fixtures/DistConsumerFixture.svelte",
-    "src/__tests__/fixtures/NestedPopoversFixture.svelte",
-    "src/__tests__/fixtures/MultiplePopoversFixture.svelte",
-    "src/__tests__/fixtures/PreventedEscapeFixture.svelte",
-    "docs/primitives-reconciliation.md",
     "docs/playground.md",
-    "docs/components/combobox.md",
-    "docs/components/popover.md",
-    "docs/components/command.md",
-    "docs/components/select.md",
-    "docs/components/dropdown-menu.md",
-    "docs/components/context-menu.md",
-    "docs/components/menubar.md",
     "docs/acceptance/GROK-20260913.md",
     "README.md",
     "CONTRIBUTING.md",
-    "ROADMAP.md",
     "TEAM_BACKLOG.md",
     "GROK_RESULT.json"
   ],
@@ -61,32 +31,23 @@
     {
       "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run build",
       "exit_code": 0,
-      "summary": "svelte-package src -> dist after removing global Escape listener. CHECK_EXIT_CODE=0."
-    },
-    {
-      "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run test",
-      "exit_code": 1,
-      "summary": "1 failed / 64 passed: two open popovers \u2014 B closed, A stayed open; focus went to remaining layer A content, not B trigger."
-    },
-    {
-      "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run test",
-      "exit_code": 0,
-      "summary": "After asserting remaining-layer focus: Test Files 8 passed (8); Tests 65 passed (65); a11y 27; consumer-dist 6. CHECK_EXIT_CODE=0."
+      "summary": "svelte-package src -> dist. CHECK_EXIT_CODE=0."
     },
     {
       "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run check",
       "exit_code": 0,
-      "summary": "svelte-check found 0 errors and 0 warnings. CHECK_EXIT_CODE=0."
+      "summary": "After build: svelte-check 0 errors and 0 warnings. DistConsumerFixture types against dist. CHECK_EXIT_CODE=0."
+    },
+    {
+      "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run test",
+      "exit_code": 0,
+      "summary": "Test Files 8 passed (8); Tests 65 passed (65); a11y 27; consumer-dist 6 including DistConsumerFixture render. CHECK_EXIT_CODE=0."
     }
   ],
   "remaining": [
-    "Ops restart of portfolio@hiai-ui after Vite 5210 + base /hiai-ui; LAN HTTP 200 not claimed.",
+    "Coordinator: empty ignored dist + remote GitHub CI (run 34768997973 / 75a92f00 follow-up). This workspace did not wipe dist.",
+    "Ops restart of portfolio@hiai-ui; LAN HTTP 200 not claimed.",
     "hiai-admin Combobox adoption (sibling).",
-    "jsdom is not browser/e2e/visual coverage. Lightpanda/Chrome not used.",
-    "Coordinator GitHub update and acceptance."
-  ],
-  "coordinator_acceptance": {
-    "status": "accepted-source",
-    "report": "docs/acceptance/COORDINATOR-20260913.md"
-  }
+    "jsdom is not browser/e2e/visual coverage."
+  ]
 }

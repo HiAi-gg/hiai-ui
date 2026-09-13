@@ -8,3 +8,7 @@ HIAI-UI-T01/T02/T03 accepted for scoped source delivery after three independent 
 - CI on main/PR runs checks/build/tests; publishing remains explicit v* tag/manual workflow, gated by checks. Version remains0.1.3; no new release/tag/npm publish.
 - jsdom canvas/contrast limitations remain; this is not browser visual/LAN runtime or complete external npm-install acceptance. No services were restarted. Current-code hub probe separately observed hiai-ui HTTP200; historical502 snapshot is dated, not a current diagnosis.
 - Prior two plan-document audit annotations were separately reviewed and updated; original plan bodies preserved.
+
+## Clean CI follow-up
+
+First GitHub run34768997973 failed before build: clean checkout lacked dist required by typed consumer fixtures. Corrected all CI/publish validation sequences to build → check → tests; no gate excluded. Coordinator verified dist is ignored/untracked within this project, removed only generated dist, then independently ran build/check/test:all exit0,65tests. Evidence coordinator/hiai-ui-clean-checks.json. The correction is delivered through a review branch/PR; no tag/manual publish or direct main push. Remote PR CI remains a separate gate.

@@ -58,7 +58,7 @@ Effort is a planning estimate, not a deadline. Confirm the first task baseline b
 - [x] **P2** · status: **accepted-source** · owner: **grok-20260913** · effort: M-L: about 1-2 days
 - Depends on: HIAI-UI-T01.
 - Acceptance: test/check/build covered on PR/push; LAN configuration verified before restart; no automatic package publish.
-- Evidence: `.github/workflows/ci.yml` runs check/build/test on `pull_request` + `push` to `main` (no publish). `.github/workflows/publish.yml` stays tag-only / `workflow_dispatch`. `vite.config.ts` `:5210` + `127.0.0.1`; `svelte.config.js` `paths.base=/hiai-ui`; Caddy already `/hiai-ui*` → `:5210`. `docs/playground.md`. Service **not** restarted.
+- Evidence: `.github/workflows/ci.yml` and `publish.yml` **check** job run **build then check then test** (dist gitignored; DistConsumerFixture needs compiled exports). Publish job also builds before typecheck; still tag-only / `workflow_dispatch`. `vite.config.ts` `:5210` + `127.0.0.1`; `svelte.config.js` `paths.base=/hiai-ui`. Service **not** restarted. Clean-runner empty-dist CI is coordinator-validated.
 - Delivery: dated acceptance report `docs/acceptance/GROK-20260913.md`. Coordinator marks accepted.
 
 ## Verification entry points

@@ -120,11 +120,11 @@ chore: update dependencies to latest versions
 
 1. Create a feature branch from `main`
 2. Make your changes following the code guidelines
-3. Run `bun run check` and fix any errors
-4. Run `bun run test` and ensure all tests pass
-5. Run `bun run build`
+3. Run `bun run build` (`dist/` is gitignored; package exports resolve there)
+4. Run `bun run check` and fix any errors
+5. Run `bun run test` and ensure all tests pass
 6. Push and create a PR
-7. Ensure the **test / check / build** CI job passes (it does not publish)
+7. Ensure the **build / check / test** CI job passes (it does not publish)
 8. Request review
 
 ## Release Process
@@ -138,12 +138,12 @@ Follow [Semantic Versioning](https://semver.org/):
 
 ### Publishing
 
-Ordinary CI (PR / push to `main`) runs check, build, and test only. Publishing is **not** automatic on PR. OIDC trusted publishing runs on **tag push** (`v*`) or `workflow_dispatch`:
+Ordinary CI (PR / push to `main`) runs **build, then check, then test** only. Publishing is **not** automatic on PR. OIDC trusted publishing runs on **tag push** (`v*`) or `workflow_dispatch`:
 
 ```bash
 # Update version in package.json
-bun run check
 bun run build
+bun run check
 
 # Commit changes
 git add package.json
