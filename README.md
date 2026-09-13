@@ -76,7 +76,7 @@ bun run test    # vitest (jsdom). Not browser/e2e coverage.
 bun run build   # svelte-package → dist/
 ```
 
-CI (`.github/workflows/ci.yml`) runs those three on pull requests and pushes to `main`. npm publish is **not** part of that workflow; it stays tag-only (`v*`) / `workflow_dispatch` in `.github/workflows/publish.yml`.
+CI (`.github/workflows/ci.yml`) runs **build, then check, then test** on pull requests and pushes to `main` (`dist/` is gitignored; typecheck needs compiled exports). npm publish is **not** part of that workflow; it stays tag-only (`v*`) / `workflow_dispatch` in `.github/workflows/publish.yml` (same build-before-check order).
 
 Playground / LAN ports / version pins: [docs/playground.md](docs/playground.md). Primitive plan vs exports: [docs/primitives-reconciliation.md](docs/primitives-reconciliation.md).
 
