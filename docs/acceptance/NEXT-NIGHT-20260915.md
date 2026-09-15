@@ -70,8 +70,11 @@ HTTP 200 is not the interaction proof; screenshots and the native validation too
 
 ## SHA / URL
 
-- Commit: `33380afc1ac52d8e14d807648ef35f6ee9aa7d19` (source RC; follow-up docs commit may sit on top)
+- Source commit: `33380afc1ac52d8e14d807648ef35f6ee9aa7d19`
+- HEAD at handoff: see git (CI recorded below)
 - Branch: `feat/t04-consumer-compat-editor-split`
+- PR: https://github.com/HiAi-gg/hiai-ui/pull/3
+- Remote CI: GitHub Actions `build / check / test` **SUCCESS** on run `35026326328` (https://github.com/HiAi-gg/hiai-ui/actions/runs/35026326328) for SHA `f91b326b99e075f7a1b0a9184927f874457839d1`
 - npm remains `@hiai-gg/hiai-ui@0.1.3` (does not include this source)
 - No public product URL. Library RC only.
 
