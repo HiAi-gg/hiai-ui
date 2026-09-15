@@ -70,7 +70,7 @@ HTTP 200 is not the interaction proof; screenshots and the native validation too
 
 ## SHA / URL
 
-- Commit: `69ad154f2043147ce94a583a7da8f0e1b7e03f18` (filled after git commit)
+- Commit: `33380afc1ac52d8e14d807648ef35f6ee9aa7d19` (source RC; follow-up docs commit may sit on top)
 - Branch: `feat/t04-consumer-compat-editor-split`
 - npm remains `@hiai-gg/hiai-ui@0.1.3` (does not include this source)
 - No public product URL. Library RC only.
