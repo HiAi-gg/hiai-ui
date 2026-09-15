@@ -1,53 +1,60 @@
 {
   "status": "review",
+  "date": "2026-09-15",
+  "project": "hiai-ui",
+  "kind": "library",
+  "branch": "feat/t04-consumer-compat-editor-split",
+  "baseline_head": "9919925d363791c75211be5d579ddc1df3b50d45",
+  "owner_dirty_at_start": [
+    "uncommitted T04 tree from 2026-09-14 (preserved)"
+  ],
   "tasks": [
     {
       "id": "HIAI-UI-T01",
-      "status": "review",
-      "summary": "Reconciled 2026-07-08 Popover/Command/Combobox plans against existing deep-path exports; primitives not rebuilt."
+      "status": "accepted-source",
+      "summary": "Unchanged this pass. Deep-path Popover/Command/Combobox not rebuilt."
     },
     {
       "id": "HIAI-UI-T02",
-      "status": "review",
-      "summary": "Bits UI Escape/dist consumer unchanged this pass. DistConsumerFixture still typed against package exports (no exclude/shim). CI order was the clean-runner failure."
+      "status": "accepted-source",
+      "summary": "Unchanged this pass. Bits-ui Escape ownership and DistConsumerFixture via package.json exports."
     },
     {
       "id": "HIAI-UI-T03",
+      "status": "accepted-source",
+      "summary": "Unchanged this pass. CI/publish still build then check then test; tag-only publish; Bun 1.4.0."
+    },
+    {
+      "id": "HIAI-UI-T04",
       "status": "review",
-      "summary": "CI and publish check jobs now build then check then test. publish-npm builds before typecheck. Cause: gitignored dist missing on clean runner before svelte-package. Remote CI not claimed."
+      "summary": "HiAiEditor moved to @hiai-gg/hiai-ui/editor so the main barrel no longer loads svelte-tiptap. Exact /index exports for all 21 ui primitives. classifyHiaiUiPin + hiaiUi() Vite helper (playground dogfoods it). Version stays 0.1.3; not published. 80 tests. Graphical playground evidence attached."
     }
-  ],
-  "changed_files": [
-    ".github/workflows/ci.yml",
-    ".github/workflows/publish.yml",
-    "docs/playground.md",
-    "docs/acceptance/GROK-20260913.md",
-    "README.md",
-    "CONTRIBUTING.md",
-    "TEAM_BACKLOG.md",
-    "GROK_RESULT.json"
   ],
   "checks": [
     {
-      "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run build",
+      "command": "bun run build",
       "exit_code": 0,
-      "summary": "svelte-package src -> dist. CHECK_EXIT_CODE=0."
+      "summary": "svelte-package src -> dist, including dist/editor.js and dist/lib/vite.js. BUILD_EXIT=0."
     },
     {
-      "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run check",
+      "command": "bun run check",
       "exit_code": 0,
-      "summary": "After build: svelte-check 0 errors and 0 warnings. DistConsumerFixture types against dist. CHECK_EXIT_CODE=0."
+      "summary": "After build: svelte-check 0 errors and 0 warnings. CHECK_EXIT=0."
     },
     {
-      "command": "python3 /mnt/data/work/grok-portfolio-20260913/inplace/run-check.py bun run test",
+      "command": "bun run test",
       "exit_code": 0,
-      "summary": "Test Files 8 passed (8); Tests 65 passed (65); a11y 27; consumer-dist 6 including DistConsumerFixture render. CHECK_EXIT_CODE=0."
+      "summary": "Test Files 11 passed (11); Tests 80 passed (80). TEST_EXIT=0."
     }
   ],
   "remaining": [
-    "Coordinator: empty ignored dist + remote GitHub CI (run 34768997973 / 75a92f00 follow-up). This workspace did not wipe dist.",
-    "Ops restart of portfolio@hiai-ui; LAN HTTP 200 not claimed.",
+    "Coordinator marks T04 accepted.",
+    "Owner tag/publish of the editor split; npm 0.1.3 still barrels HiAiEditor.",
+    "hiai-post PostEditor.svelte must import HiAiEditor from @hiai/ui/editor after that tag.",
+    "finance web pin is ^0.1.1 (forbidden-float) and still hits svelte-tiptap until it consumes a tagged build plus an exact pin; hiaiUi() only if it mounts the editor.",
+    "docsmint / docsmint-oss pins are ^0.1.3 (forbidden-float).",
+    "Ops restart of portfolio@hiai-ui; Caddy /hiai-ui* still 502.",
     "hiai-admin Combobox adoption (sibling).",
-    "jsdom is not browser/e2e/visual coverage."
+    "jsdom is not browser/e2e/visual coverage; favicon.png 404 on playground."
   ]
 }

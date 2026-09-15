@@ -11,10 +11,12 @@ export {
 	runThemeSpread,
 	type ThemeSpreadOrigin,
 } from './lib/theme-spread.js';
-
-// Editor lib
-export { getEditorExtensions, editorExtensions } from './lib/editor/editorExtensions.js';
-export { markdownToJson, type EditorOutput } from './lib/editor/markdown.js';
+export {
+	classifyHiaiUiPin,
+	isAllowedHiaiUiPin,
+	isPortableHiaiUiPin,
+	type HiaiUiPinKind,
+} from './lib/pins.js';
 export { drawTimeSeriesChart, drawBarChart, drawDonutChart } from './lib/chart-utils.js';
 
 // Stores
@@ -31,10 +33,6 @@ export { default as StatusBadge } from './components/StatusBadge.svelte';
 export { default as ConfirmModal } from './components/ConfirmModal.svelte';
 export { default as ThemeToggle } from './components/ThemeToggle.svelte';
 export { default as DataTable } from './components/DataTable.svelte';
-export { default as HiAiEditor } from './components/editor/HiAiEditor.svelte';
-export { default as EditorToolbar } from './components/editor/EditorToolbar.svelte';
-export { default as LinkDialog } from './components/editor/LinkDialog.svelte';
-export { default as MarkdownToggle } from './components/editor/MarkdownToggle.svelte';
 export { default as ConfirmDialog } from './components/ui/confirm-dialog/ConfirmDialog.svelte';
 export { default as DatePicker } from './components/DatePicker.svelte';
 export { default as ScrollToTop } from './components/ScrollToTop.svelte';

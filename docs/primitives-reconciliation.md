@@ -2,6 +2,8 @@
 
 Reconciles the 2026-07-08 Popover / Command / Combobox (and ContextMenu / Menubar) plans against the **current** package. Existing primitives were **not** rebuilt in this pass.
 
+**2026-09-14 addendum:** every `src/components/ui/<name>/index.ts` now has an exact `package.json` export to `dist/components/ui/<name>/index.js` (badge, card, checkbox, confirm-dialog, label, radio-group, textarea were missing). Editor left the main barrel for `@hiai-gg/hiai-ui/editor` so non-editor consumers do not load `svelte-tiptap`. Primitives were still not rebuilt.
+
 Plans read: `docs/hiai-admin-integration-plan-2026-07-08.md`, `docs/TEAM-PLAN-PROMPT.md`, `docs/tasks-2026-07-08.md`. Package: `@hiai-gg/hiai-ui@0.1.3`.
 
 ## Barrel policy (unchanged)

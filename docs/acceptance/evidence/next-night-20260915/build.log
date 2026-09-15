@@ -1,0 +1,9 @@
+=== bun run build 2026-09-15T20:46:15Z ===
+[0m[2m[35m$[0m [2m[1msvelte-package -i src -o dist[0m
+(node:192832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/lib/vite" without a file extension (vite.config.ts:6:24). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+src -> dist
+BUILD_EXIT=0
