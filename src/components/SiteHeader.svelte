@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
 	/**
 	 * SiteHeader — universal, prop-driven site header for hiai-ui
 	 *
@@ -114,9 +115,36 @@
 	function handleToggleDark() {
 		onToggleDark?.();
 	}
+
+  // Capture touch/mouse outside the navigation before page handlers can stop bubbling.
+  let navigationRoot = $state<HTMLElement | undefined>();
+  onMount(() => {
+    function dismissOutside(event: Event) {
+      if (mobileOpen && navigationRoot && !event.composedPath().some(target =>
+        target instanceof Element && navigationRoot?.contains(target) &&
+        target.matches("#site-header-mobile-menu, [aria-controls=\"site-header-mobile-menu\"]")
+      )) {
+        mobileOpen = false;
+      }
+    }
+    function dismissEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape' && mobileOpen) {
+        mobileOpen = false;
+      }
+    }
+    document.addEventListener('pointerdown', dismissOutside, true);
+    document.addEventListener('click', dismissOutside, true);
+    document.addEventListener('keydown', dismissEscape);
+    return () => {
+      document.removeEventListener('pointerdown', dismissOutside, true);
+      document.removeEventListener('click', dismissOutside, true);
+      document.removeEventListener('keydown', dismissEscape);
+    };
+  });
 </script>
 
 <header
+  bind:this={navigationRoot}
 	class={cn(
 		'fixed inset-x-0 top-0 z-50 h-14 border-b border-border bg-background/80 backdrop-blur-sm',
 		className
