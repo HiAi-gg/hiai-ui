@@ -3,11 +3,12 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { hiaiUi } from './src/lib/vite.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [tailwindcss(), sveltekit()],
+  plugins: [hiaiUi(), tailwindcss(), sveltekit()],
   server: { port: 5210, strictPort: true, host: "127.0.0.1" },
   preview: { port: 5210, strictPort: true, host: "127.0.0.1" },
   resolve: {
@@ -44,12 +45,8 @@ export default defineConfig({
       'prosemirror-view',
     ],
   },
-  // Some packages (lucide-svelte, bits-ui, svelte-tiptap, hiai-ui) ship
-  // compiled .svelte files inside their dist/. esbuild's pre-bundler can't
-  // handle .svelte files — excluding them routes them through the normal
-  // Svelte plugin pipeline. See hiai-observe/frontend/vite.config.ts for
-  // the canonical pattern.
-  optimizeDeps: {
-    exclude: ['lucide-svelte', 'bits-ui', 'svelte-tiptap'],
-  },
+  // lucide-svelte / bits-ui / svelte-tiptap optimizeDeps.exclude and
+  // svelte-tiptap ssr.noExternal come from hiaiUi() (same helper consumers
+  // should apply). Keep the TipTap/ProseMirror aliases above for the
+  // playground's relative HiAiEditor import.
 });

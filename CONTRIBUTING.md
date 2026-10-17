@@ -30,7 +30,7 @@ bun install
 | `bun run build` | `svelte-package` → `dist/` |
 | `bun run dev` | Playground at `http://127.0.0.1:5210/hiai-ui/` |
 
-Primitives (`src/components/ui/`) are **deep-path only**: `@hiai-gg/hiai-ui/components/ui/<name>/index`. Do not add them to `src/index.ts`. Fonts stay consumer-owned (`tokens.css` must not `@import` webfonts).
+Primitives (`src/components/ui/`) are **deep-path only**: `@hiai-gg/hiai-ui/components/ui/<name>/index`. Do not add them to `src/index.ts`. Editor components stay on `@hiai-gg/hiai-ui/editor` (`src/editor.ts`), not the main barrel. Fonts stay consumer-owned (`tokens.css` must not `@import` webfonts).
 
 See [docs/primitives-reconciliation.md](docs/primitives-reconciliation.md) and [docs/playground.md](docs/playground.md).
 

@@ -10,7 +10,9 @@ Library playground is the SvelteKit app in this repo (`src/routes/+page.svelte`)
 | Runtime | Bun **1.4.0** (CI + publish workflows) |
 | UI stack | Svelte **5.57**, SvelteKit **2.70**, Vite **8.2**, TypeScript **6** |
 | Primitives | bits-ui `^2.18.1` |
-| Install | `npm:@hiai-gg/hiai-ui@0.1.3`, `file:../hiai-ui`, or `github:HiAi-gg/hiai-ui#…` — not `workspace:*` unless the consumer is in the same workspace |
+| Install | exact `0.1.3`, `npm:@hiai-gg/hiai-ui@0.1.3`, `file:../hiai-ui` (dev), or `github:HiAi-gg/hiai-ui#<sha>` / `#v0.1.3` — not `workspace:*`, `^`, or `#main` |
+| Editor | `@hiai-gg/hiai-ui/editor` (not the main barrel). Playground still imports `HiAiEditor` via a relative path. |
+| Vite helper | `@hiai-gg/hiai-ui/vite` `hiaiUi()` for consumers that mount the editor |
 
 Ordinary CI is `.github/workflows/ci.yml` (`build` then `check` then `test`) on **push to `main` and pull requests**. That workflow does **not** publish. Build is first because `dist/` is gitignored and DistConsumerFixture imports package exports that resolve there.
 
@@ -25,7 +27,7 @@ Canon: `/mnt/data/.devstack/LAN-PORTS.md` — hiai-ui web **5210**.
 | Caddy | `handle /hiai-ui*` → `127.0.0.1:5210` in `/mnt/data/.devstack/caddy/sites/zz-lan-portfolio.caddy` | Source read; process not restarted |
 | Vite | `server.port=5210`, `strictPort: true`, `host: 127.0.0.1` | `vite.config.ts` |
 | Kit base | `kit.paths.base=/hiai-ui` | `svelte.config.js` |
-| URL | `https://192.168.1.111/hiai-ui/` and `http://127.0.0.1:5210/hiai-ui/` | Runtime HTTP not claimed here |
+| URL | `https://192.168.1.111/hiai-ui/` and `http://127.0.0.1:5210/hiai-ui/` | Direct `:5210` HTTP 200 this pass; Caddy `/hiai-ui*` 502; LAN 443 not reachable |
 
 **Do not restart** `portfolio@hiai-ui` from a library task. After these files land, an ops pass must restart the unit so Caddy stops 502-ing if Vite is still bound to the old `:50203`.
 

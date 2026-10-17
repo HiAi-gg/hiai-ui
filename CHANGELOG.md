@@ -5,6 +5,19 @@ All notable changes to @hiai-gg/hiai-ui will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+Package version remains **0.1.3** until an owner tag. These source changes are not on npm.
+
+### Changed
+- **Editor off the main barrel.** `HiAiEditor`, `EditorToolbar`, `LinkDialog`, `MarkdownToggle`, `getEditorExtensions`, and `markdownToJson` now live at `@hiai-gg/hiai-ui/editor`. Importing `EmptyState` / `PageHeader` from `@hiai-gg/hiai-ui` no longer loads `svelte-tiptap` (Vite SSR failed with "has no known '.' export" on that package).
+- **Exact `/index` exports** for remaining primitives: badge, card, checkbox, confirm-dialog, label, radio-group, textarea.
+
+### Added
+- `classifyHiaiUiPin` / `isAllowedHiaiUiPin` / `isPortableHiaiUiPin` on the main barrel.
+- `hiaiUi()` Vite helper at `@hiai-gg/hiai-ui/vite` (`optimizeDeps.exclude` + `ssr.noExternal` for `svelte-tiptap`).
+- Playground Vite config applies `hiaiUi()` (same helper editor hosts should use).
+
 ## [0.1.3] - 2026-08-29
 
 ### Fixed

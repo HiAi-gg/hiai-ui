@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Vary: Origin
+content-length: 209545
+content-type: text/html
+etag: "9d0ws7"
+x-sveltekit-page: true
+Date: Tue, 15 Sep 2026 21:25:57 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+

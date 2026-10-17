@@ -1,0 +1,4 @@
+session=hiai-ui-next-night-20260915
+engine=chrome (CLI default; graphical fallback vs Lightpanda)
+url=http://127.0.0.1:5210/hiai-ui/
+started=2026-09-15T21:26:13Z

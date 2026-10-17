@@ -8,15 +8,15 @@
 ## Why @hiai-gg/hiai-ui
 
 - One source of truth for design tokens across the HiAi ecosystem
-- 22 composites (AdminSidebar, ChatWidget, DatePicker, ConfirmDialog, ScrollToTop, SearchBar, LiveIndicator, DocumentTitle…)
-- 14 shadcn-svelte primitive categories (Button, Card, Select, Checkbox, RadioGroup…) with deep-path imports
+- Composites on the main barrel (AdminSidebar, ChatWidget, DatePicker, ConfirmDialog, ScrollToTop, SearchBar, LiveIndicator, DocumentTitle…). Editor (`HiAiEditor`, toolbar, markdown helpers) is `@hiai-gg/hiai-ui/editor` so EmptyState consumers do not load `svelte-tiptap`.
+- 21 shadcn-svelte primitive categories with exact `/index` exports (Button, Card, Badge, Select, Checkbox, RadioGroup, Textarea, Label…)
 - Dark mode built-in via `.dark` class; observe theme via `.theme-observe`
 - Zero-config consumption — just import tokens.css and you're good
 
 The canonical UI package for the HiAi ecosystem. Design reference — **hiai-docs
 (oklch, shadcn-svelte new-york / slate). Consumers import **compiled `dist/`**
-(`svelte-package`). Install from npm (`@hiai-gg/hiai-ui@0.1.3`), `file:`, or
-`github:HiAi-gg/hiai-ui#…`. Do not mix with `@webs/ui`.
+(`svelte-package`). Install from npm (`@hiai-gg/hiai-ui@0.1.3`), sibling `file:`, or
+`github:HiAi-gg/hiai-ui#v0.1.3` / a full SHA. Do not mix with `@webs/ui`.
 
 > See the project documentation for more details.
 
@@ -27,6 +27,7 @@ The canonical UI package for the HiAi ecosystem. Design reference — **hiai-doc
 | **Tokens** | `dist/styles/tokens.css` | `@import "@hiai-gg/hiai-ui/styles/tokens.css";` |
 | **Primitives** (shadcn) | `dist/components/ui/*` | `import { Button } from "@hiai-gg/hiai-ui/components/ui/button/index";` |
 | **Composites** | `dist/components/*` | `import { AdminSidebar, StatsCard } from "@hiai-gg/hiai-ui";` |
+| **Editor** | `dist/editor.js` | `import { HiAiEditor } from "@hiai-gg/hiai-ui/editor";` |
 | **Stores / lib** | `dist/stores`, `dist/lib` | `import { authStore } from "@hiai-gg/hiai-ui";` |
 
 Primitives are deep-path only (not in main barrel) to avoid pulling
@@ -34,7 +35,7 @@ Primitives are deep-path only (not in main barrel) to avoid pulling
 
 ## How to connect (contract — enforced by every hiai project)
 
-1. Add dependency (npm 0.1.3, `file:../hiai-ui`, or `github:HiAi-gg/hiai-ui#main` — `workspace:*` only inside a real workspace):
+1. Add dependency (exact npm `0.1.3`, `file:../hiai-ui` for local dev, or `github:HiAi-gg/hiai-ui#v0.1.3` / a full SHA — not `workspace:*`, `^0.1.3`, or `#main`):
    ```jsonc
    // package.json
    "dependencies": { "@hiai-gg/hiai-ui": "0.1.3" }
@@ -49,7 +50,7 @@ Primitives are deep-path only (not in main barrel) to avoid pulling
    @source "../node_modules/@hiai-gg/hiai-ui/dist";
    ```
    (path — relative to the file; adjust for project depth).
-4. Use composites from `@hiai-gg/hiai-ui` and primitives from `@hiai-gg/hiai-ui/components/ui/<name>/index`.
+4. Use composites from `@hiai-gg/hiai-ui` and primitives from `@hiai-gg/hiai-ui/components/ui/<name>/index`. Import the editor from `@hiai-gg/hiai-ui/editor`. Apps that mount `HiAiEditor` should add `hiaiUi()` from `@hiai-gg/hiai-ui/vite` so Vite SSR can resolve `svelte-tiptap` (it ships `svelte`/`types` conditions only).
 5. **Remove local duplicates** of components and tokens.
 6. Theme: `.dark` class on `<html>` (toggle via `ThemeToggle`); for observe — `.theme-observe`.
 

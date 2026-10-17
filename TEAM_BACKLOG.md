@@ -1,23 +1,23 @@
 # Team backlog — hiai-ui
 
 Source audit: **2026-09-13**. Kind: **library**.
-Baseline HEAD: `19cb2318f0805ea6f46fddc066c88ac56510f783`; branch: `main`.
+This pass: **2026-09-15**. Branch: `feat/t04-consumer-compat-editor-split` (from `origin/main` `9919925`). T04 source remains unpublished.
 
 Coordination and acceptance: [TEAM_HANDOFF.md](../TEAM_HANDOFF.md).
 
 ## Current reconciliation
 
-Ordinary CI (`.github/workflows/ci.yml`) covers check/build/test on PR and `main` push; publish remains tag-only. Package 0.1.3; Popover/Command/Combobox are exported deep-path primitives.
+Ordinary CI (`.github/workflows/ci.yml`) covers check/build/test on PR and `main` push; publish remains tag-only. Package **0.1.3** (unpublished editor-split + exact primitive `/index` exports). Popover/Command/Combobox stay deep-path. Editor is `@hiai-gg/hiai-ui/editor`, not the main barrel.
 
-Source checks support this note; they do not certify the running app. Prior live/CI/test claims are historical until rechecked. GitHub freshness was not verified.
+Source checks this pass: `bun run build` 0, `bun run check` 0 errors/0 warnings, `bun run test` **80/80**. Graphical playground evidence: [docs/acceptance/NEXT-NIGHT-20260915.md](docs/acceptance/NEXT-NIGHT-20260915.md). Caddy `/hiai-ui*` still 502; `portfolio@hiai-ui` was not restarted.
 
-Recent local commits:
+Recent local commits on `origin/main` at start:
 
-- `19cb231 chore: pin Svelte 5.57, Kit 2.70, and Vite 8.2`
-- `aeea80c fix: do not import Inter webfonts from tokens.css`
-- `dd8a983 feat: circular theme spread and Inter tokens for 0.1.2`
+- `9919925 Build package before clean consumer typechecks`
+- `a597926 Build package before typechecking clean consumer fixtures`
+- `75a92f0 Verify primitive accessibility and built consumer exports in CI`
 
-Pre-existing Git status: **1 changed/untracked entries** before this audit. Preserve them; the baseline inventory records paths, not secret contents.
+Pre-existing Git status at start of 2026-09-15: uncommitted T04 tree from 2026-09-14 (preserved). Owner dirty files besides that T04 set: none.
 
 ## Read first
 
@@ -61,6 +61,14 @@ Effort is a planning estimate, not a deadline. Confirm the first task baseline b
 - Evidence: `.github/workflows/ci.yml` and `publish.yml` **check** job run **build then check then test** (dist gitignored; DistConsumerFixture needs compiled exports). Publish job also builds before typecheck; still tag-only / `workflow_dispatch`. `vite.config.ts` `:5210` + `127.0.0.1`; `svelte.config.js` `paths.base=/hiai-ui`. Service **not** restarted. Clean-runner empty-dist CI is coordinator-validated.
 - Delivery: dated acceptance report `docs/acceptance/GROK-20260913.md`. Coordinator marks accepted.
 
+### HIAI-UI-T04 — Consumer compatibility: editor graph, primitive /index exports, portable pins
+
+- [ ] **P1** · status: **review** · owner: **grok-20260915** · effort: M: about 0.5-1 day
+- Depends on: HIAI-UI-T01–T03 (accepted-source).
+- Acceptance: Non-editor barrel imports do not load `svelte-tiptap`; every `src/components/ui/<name>/index.ts` has an exact `.js` export; pin classifier distinguishes portable vs floating specs; editor Vite helper covers the svelte-tiptap SSR trap. No publish/tag.
+- Evidence: `src/editor.ts` + `package.json` `./editor` and `./vite`; barrel no longer re-exports HiAiEditor. Missing `/index` exports added for badge/card/checkbox/confirm-dialog/label/radio-group/textarea. `classifyHiaiUiPin` in `src/lib/pins.ts`. `hiaiUi()` in `src/lib/vite.ts`; playground Vite applies it. Tests: `src/__tests__/consumer-compat.test.ts` (including barrel import-graph walk + `./vite` export), `pins.test.ts`, `vite-plugin.test.ts`. Graphical: `docs/acceptance/evidence/next-night-20260915/`.
+- Delivery: `docs/acceptance/GROK-20260914.md` and `docs/acceptance/NEXT-NIGHT-20260915.md`. Coordinator marks accepted.
+
 ## Verification entry points
 
 Available script names read from manifests (not executed and not automatically safe):
@@ -73,4 +81,6 @@ Before acceptance attach actual test/typecheck/build evidence and explicitly rec
 
 ## Coordinator acceptance
 
-[Independent final evidence](docs/acceptance/COORDINATOR-20260913.md):65 tests, check/build passed. T01–T03 scoped source accepted; browser/visual and external install remain distinct.
+[Independent T01–T03 evidence](docs/acceptance/COORDINATOR-20260913.md): 65 tests, check/build passed. T01–T03 scoped source accepted; browser/visual and external install remain distinct.
+
+T04 (2026-09-15) is **review** pending independent coordinator checks. Local evidence: [docs/acceptance/GROK-20260914.md](docs/acceptance/GROK-20260914.md), [docs/acceptance/NEXT-NIGHT-20260915.md](docs/acceptance/NEXT-NIGHT-20260915.md).

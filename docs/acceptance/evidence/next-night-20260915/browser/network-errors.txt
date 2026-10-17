@@ -1,0 +1,1 @@
+[346558.128] GET http://127.0.0.1:5210/hiai-ui/favicon.png (Other) 404
