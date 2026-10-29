@@ -3,7 +3,7 @@
 Source audit: **2026-09-13**. Kind: **library**.
 This pass: **2026-09-15**. Branch: `feat/t04-consumer-compat-editor-split` (from `origin/main` `9919925`). T04 source remains unpublished.
 
-Coordination and acceptance: [TEAM_HANDOFF.md](../TEAM_HANDOFF.md).
+Coordination and acceptance: [TEAM_HANDOFF.md](/mnt/data/work/projects-dot-archive-20261017/root-docs/TEAM_HANDOFF.md).
 
 ## Current reconciliation
 
